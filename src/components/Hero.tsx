@@ -253,7 +253,6 @@ const STYLES = `
     }
   }
 `;
-
 const Hero: React.FC = () => {
   const nameParts = personalInfo.name.split(' ');
   const firstName = nameParts[0];
