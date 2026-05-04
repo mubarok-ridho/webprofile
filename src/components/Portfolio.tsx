@@ -14,7 +14,6 @@ interface PortfolioItem {
 }
 
 const Portfolio: React.FC = () => {
-  const [showLinkOptions, setShowLinkOptions] = useState<number | null>(null);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
   const portfolios: PortfolioItem[] = [
