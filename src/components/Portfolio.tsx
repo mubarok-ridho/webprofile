@@ -15,6 +15,7 @@ interface PortfolioItem {
 
 const Portfolio: React.FC = () => {
   const [showLinkOptions, setShowLinkOptions] = useState<number | null>(null);
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
   const portfolios: PortfolioItem[] = [
     {
@@ -118,6 +119,14 @@ const Portfolio: React.FC = () => {
     return isDoubleLogo ? 'w-12 h-12 md:w-16 md:h-16' : 'w-14 h-14 md:w-20 md:h-20';
   };
 
+  const toggleExpand = (id: number) => {
+    if (expandedCard === id) {
+      setExpandedCard(null);
+    } else {
+      setExpandedCard(id);
+    }
+  };
+
   return (
     <section
       id="portfolio"
@@ -160,22 +169,26 @@ const Portfolio: React.FC = () => {
           />
         </div>
 
-        {/* Portfolio grid - 2 columns on mobile, 2 on tablet, 3 on desktop */}
+        {/* Portfolio grid */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           {portfolios.map((item) => {
             const statusStyle = getStatusStyle(item.status);
             const isDoubleLogo = Array.isArray(item.logo);
+            const isExpanded = expandedCard === item.id;
+            const hasLinks = item.links && item.links.length > 0;
 
             return (
               <div
                 key={item.id}
-                className="group rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1"
+                className={`group rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
+                  isExpanded ? 'ring-1 ring-[#c8a96e]/30' : ''
+                }`}
                 style={{
                   background: 'rgba(20, 18, 16, 0.8)',
                   border: '1px solid rgba(200, 169, 110, 0.15)',
                 }}
               >
-                {/* Image preview - smaller on mobile */}
+                {/* Image preview */}
                 <div className="relative w-full h-36 md:h-56 overflow-hidden bg-[#1a1814]">
                   <img
                     src={item.previewImage}
@@ -184,7 +197,7 @@ const Portfolio: React.FC = () => {
                     style={{ filter: 'grayscale(15%) brightness(0.85)' }}
                   />
 
-                  {/* Status badge - smaller on mobile */}
+                  {/* Status badge */}
                   <div
                     className="absolute top-2 right-2 md:top-3 md:right-3 px-1.5 py-0.5 md:px-2.5 md:py-1 rounded-sm text-[8px] md:text-[10px] font-mono tracking-wider font-semibold"
                     style={{
@@ -198,7 +211,7 @@ const Portfolio: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Content - smaller padding on mobile */}
+                {/* Content */}
                 <div className="p-3 md:p-6">
                   {/* Logo section */}
                   <div className="mb-2 md:mb-5">
@@ -225,7 +238,7 @@ const Portfolio: React.FC = () => {
                     )}
                   </div>
 
-                  {/* Title - smaller on mobile */}
+                  {/* Title */}
                   <h3
                     className="text-sm md:text-xl font-semibold mb-1 md:mb-2 line-clamp-1"
                     style={{
@@ -236,7 +249,7 @@ const Portfolio: React.FC = () => {
                     {item.title}
                   </h3>
 
-                  {/* Description - hide on mobile, show on tablet+ */}
+                  {/* Description */}
                   <p
                     className="hidden md:block text-sm leading-relaxed mb-4 line-clamp-3"
                     style={{ color: '#a8a090', lineHeight: 1.6 }}
@@ -252,7 +265,7 @@ const Portfolio: React.FC = () => {
                     {item.description.length > 80 ? item.description.substring(0, 80) + '...' : item.description}
                   </p>
 
-                  {/* Tech stack - smaller on mobile, fewer items */}
+                  {/* Tech stack */}
                   <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-5">
                     {item.techStack.slice(0, 3).map((tech, idx) => (
                       <span
@@ -280,8 +293,8 @@ const Portfolio: React.FC = () => {
                     )}
                   </div>
 
-                  {/* Links - smaller text on mobile */}
-                  {item.link && (
+                  {/* Links - Special handling for Corporate Web Profiles with expandable dropdown */}
+                  {item.link && !hasLinks && (
                     <a
                       href={item.link}
                       target="_blank"
@@ -295,43 +308,47 @@ const Portfolio: React.FC = () => {
                     </a>
                   )}
 
-                  {/* Links dropdown */}
-                  {item.links && (
-                    <div
-                      className="relative inline-block"
-                      onMouseEnter={() => setShowLinkOptions(item.id)}
-                      onMouseLeave={() => setShowLinkOptions(null)}
-                    >
+                  {/* Expandable dropdown for Corporate Web Profiles */}
+                  {hasLinks && (
+                    <div className="w-full">
                       <button
+                        onClick={() => toggleExpand(item.id)}
                         className="inline-flex items-center gap-1 md:gap-1.5 text-[10px] md:text-sm font-mono transition-colors duration-200"
                         style={{ color: '#c8a96e' }}
                         onMouseEnter={(e) => { e.currentTarget.style.color = '#e0c88e'; }}
                         onMouseLeave={(e) => { e.currentTarget.style.color = '#c8a96e'; }}
                       >
-                        View Options ↓
+                        {isExpanded ? 'Hide Options ↑' : 'View Options ↓'}
                       </button>
 
-                      {showLinkOptions === item.id && (
+                      {/* Expandable dropdown menu */}
+                      {isExpanded && (
                         <div
-                          className="absolute left-0 mt-1 md:mt-2 rounded-md shadow-lg z-20 min-w-[140px] md:min-w-[200px]"
+                          className="mt-2 md:mt-3 rounded-md shadow-lg w-full overflow-hidden transition-all duration-300"
                           style={{
                             background: '#141210',
                             border: '1px solid rgba(200, 169, 110, 0.2)',
-                            backdropFilter: 'blur(8px)',
                           }}
-                          onMouseEnter={() => setShowLinkOptions(item.id)}
-                          onMouseLeave={() => setShowLinkOptions(null)}
                         >
-                          {item.links.map((link, idx) => (
+                          {item.links?.map((link, idx) => (
                             <a
                               key={idx}
                               href={link.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="block px-3 py-2 md:px-4 md:py-2.5 text-[10px] md:text-sm font-mono transition-colors duration-200"
-                              style={{ color: '#a8a090' }}
-                              onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e'; e.currentTarget.style.background = 'rgba(200, 169, 110, 0.08)'; }}
-                              onMouseLeave={(e) => { e.currentTarget.style.color = '#a8a090'; e.currentTarget.style.background = 'transparent'; }}
+                              className="block px-3 py-2 md:px-4 md:py-3 text-[10px] md:text-sm font-mono transition-colors duration-200 border-b last:border-b-0"
+                              style={{ 
+                                color: '#a8a090',
+                                borderColor: 'rgba(200, 169, 110, 0.1)'
+                              }}
+                              onMouseEnter={(e) => { 
+                                e.currentTarget.style.color = '#c8a96e'; 
+                                e.currentTarget.style.background = 'rgba(200, 169, 110, 0.08)'; 
+                              }}
+                              onMouseLeave={(e) => { 
+                                e.currentTarget.style.color = '#a8a090'; 
+                                e.currentTarget.style.background = 'transparent'; 
+                              }}
                             >
                               {link.name}
                             </a>
