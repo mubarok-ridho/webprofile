@@ -105,7 +105,7 @@ const Portfolio: React.FC = () => {
     }
   };
 
-  const getLogoSize = (title: string, isDoubleLogo: boolean, idx?: number) => {
+  const getLogoSize = (title: string, isDoubleLogo: boolean, _idx?: number) => {
     // Special sizing for specific logos
     if (title === 'MODU') {
       return 'w-28 h-28';
@@ -207,7 +207,7 @@ const Portfolio: React.FC = () => {
                   <div className="mb-5">
                     {isDoubleLogo ? (
                       <div className="flex items-center gap-5">
-                        {item.logo.map((logo, idx) => {
+                        {(Array.isArray(item.logo) ? item.logo : [item.logo]).map((logo, idx) => {
                           const logoSize = getLogoSize(item.title, isDoubleLogo, idx);
                           return (
                             <img
