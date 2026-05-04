@@ -25,7 +25,7 @@ const Education: React.FC = () => {
       id: 1,
       degree: 'Bachelor of Informatics - Cumlaude',
       institution: 'Universitas Amikom Purwokerto',
-      year: '2021 - 2025',
+      year: '2021 - 2026',
       gpa: '3.80/4.00',
       description: 'Focus on AI development, Machine Learning, and Backend Engineering.',
       logo: 'https://sistem.lldikti6.id/data/logo/061054.jpg',
