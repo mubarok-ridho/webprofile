@@ -106,19 +106,16 @@ const Portfolio: React.FC = () => {
   };
 
   const getLogoSize = (title: string, isDoubleLogo: boolean, _idx?: number) => {
-    // Special sizing for specific logos
     if (title === 'MODU') {
-      return 'w-28 h-28';
+      return 'w-20 h-20 md:w-28 md:h-28';
     }
     if (title === 'CLAIRE') {
-      return 'w-28 h-28';
+      return 'w-20 h-20 md:w-28 md:h-28';
     }
     if (title === 'Corporate Web Profiles') {
-      // Nutanics and Javatech logos
-      return 'w-24 h-24';
+      return 'w-16 h-16 md:w-24 md:h-24';
     }
-    // Default sizes
-    return isDoubleLogo ? 'w-16 h-16' : 'w-20 h-20';
+    return isDoubleLogo ? 'w-12 h-12 md:w-16 md:h-16' : 'w-14 h-14 md:w-20 md:h-20';
   };
 
   return (
@@ -138,17 +135,17 @@ const Portfolio: React.FC = () => {
         }}
       />
 
-      <div className="container mx-auto px-6 max-w-7xl relative z-10">
+      <div className="container mx-auto px-4 md:px-6 max-w-7xl relative z-10">
         {/* Section header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10 md:mb-14">
           <p
-            className="text-sm tracking-widest uppercase mb-3"
+            className="text-xs md:text-sm tracking-widest uppercase mb-2 md:mb-3"
             style={{ color: '#8a8580', fontFamily: "'Montserrat', monospace" }}
           >
             My Work
           </p>
           <h2
-            className="text-3xl md:text-4xl font-bold mb-4"
+            className="text-2xl md:text-4xl font-bold mb-3 md:mb-4"
             style={{
               fontFamily: "'Montserrat', sans-serif",
               color: '#f0ece4',
@@ -158,13 +155,13 @@ const Portfolio: React.FC = () => {
             Portfolio
           </h2>
           <div
-            className="w-12 h-px mx-auto rounded-full"
+            className="w-10 md:w-12 h-px mx-auto rounded-full"
             style={{ background: '#c8a96e' }}
           />
         </div>
 
-        {/* Portfolio grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Portfolio grid - 2 columns on mobile, 2 on tablet, 3 on desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           {portfolios.map((item) => {
             const statusStyle = getStatusStyle(item.status);
             const isDoubleLogo = Array.isArray(item.logo);
@@ -178,8 +175,8 @@ const Portfolio: React.FC = () => {
                   border: '1px solid rgba(200, 169, 110, 0.15)',
                 }}
               >
-                {/* Image preview */}
-                <div className="relative w-full h-56 overflow-hidden bg-[#1a1814]">
+                {/* Image preview - smaller on mobile */}
+                <div className="relative w-full h-36 md:h-56 overflow-hidden bg-[#1a1814]">
                   <img
                     src={item.previewImage}
                     alt={item.title}
@@ -187,9 +184,9 @@ const Portfolio: React.FC = () => {
                     style={{ filter: 'grayscale(15%) brightness(0.85)' }}
                   />
 
-                  {/* Status badge */}
+                  {/* Status badge - smaller on mobile */}
                   <div
-                    className="absolute top-3 right-3 px-2.5 py-1 rounded-sm text-[10px] font-mono tracking-wider font-semibold"
+                    className="absolute top-2 right-2 md:top-3 md:right-3 px-1.5 py-0.5 md:px-2.5 md:py-1 rounded-sm text-[8px] md:text-[10px] font-mono tracking-wider font-semibold"
                     style={{
                       background: statusStyle.bg,
                       color: '#ffffff',
@@ -201,12 +198,12 @@ const Portfolio: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-6">
-                  {/* Logo section - No white frame, larger size with special sizing */}
-                  <div className="mb-5">
+                {/* Content - smaller padding on mobile */}
+                <div className="p-3 md:p-6">
+                  {/* Logo section */}
+                  <div className="mb-2 md:mb-5">
                     {isDoubleLogo ? (
-                      <div className="flex items-center gap-5">
+                      <div className="flex items-center gap-2 md:gap-5">
                         {(Array.isArray(item.logo) ? item.logo : [item.logo]).map((logo, idx) => {
                           const logoSize = getLogoSize(item.title, isDoubleLogo, idx);
                           return (
@@ -228,9 +225,9 @@ const Portfolio: React.FC = () => {
                     )}
                   </div>
 
-                  {/* Title */}
+                  {/* Title - smaller on mobile */}
                   <h3
-                    className="text-xl font-semibold mb-2"
+                    className="text-sm md:text-xl font-semibold mb-1 md:mb-2 line-clamp-1"
                     style={{
                       fontFamily: "'Montserrat', serif",
                       color: '#f0ece4',
@@ -239,20 +236,28 @@ const Portfolio: React.FC = () => {
                     {item.title}
                   </h3>
 
-                  {/* Description */}
+                  {/* Description - hide on mobile, show on tablet+ */}
                   <p
-                    className="text-sm leading-relaxed mb-4"
+                    className="hidden md:block text-sm leading-relaxed mb-4 line-clamp-3"
                     style={{ color: '#a8a090', lineHeight: 1.6 }}
                   >
                     {item.description}
                   </p>
+                  
+                  {/* Short description for mobile */}
+                  <p
+                    className="text-[10px] md:hidden leading-relaxed mb-2 line-clamp-2"
+                    style={{ color: '#a8a090', lineHeight: 1.4 }}
+                  >
+                    {item.description.length > 80 ? item.description.substring(0, 80) + '...' : item.description}
+                  </p>
 
-                  {/* Tech stack */}
-                  <div className="flex flex-wrap gap-2 mb-5">
-                    {item.techStack.slice(0, 5).map((tech, idx) => (
+                  {/* Tech stack - smaller on mobile, fewer items */}
+                  <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-5">
+                    {item.techStack.slice(0, 3).map((tech, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-1 text-[10px] rounded-sm font-mono tracking-wide"
+                        className="px-1.5 py-0.5 md:px-2 md:py-1 text-[7px] md:text-[10px] rounded-sm font-mono tracking-wide"
                         style={{
                           background: 'rgba(200, 169, 110, 0.1)',
                           color: '#c8c0b4',
@@ -262,26 +267,26 @@ const Portfolio: React.FC = () => {
                         {tech}
                       </span>
                     ))}
-                    {item.techStack.length > 5 && (
+                    {item.techStack.length > 3 && (
                       <span
-                        className="px-2 py-1 text-[10px] rounded-sm font-mono"
+                        className="px-1.5 py-0.5 md:px-2 md:py-1 text-[7px] md:text-[10px] rounded-sm font-mono"
                         style={{
                           background: 'rgba(200, 169, 110, 0.08)',
                           color: '#6a6560',
                         }}
                       >
-                        +{item.techStack.length - 5}
+                        +{item.techStack.length - 3}
                       </span>
                     )}
                   </div>
 
-                  {/* Links */}
+                  {/* Links - smaller text on mobile */}
                   {item.link && (
                     <a
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-mono transition-colors duration-200"
+                      className="inline-flex items-center gap-1 md:gap-1.5 text-[10px] md:text-sm font-mono transition-colors duration-200"
                       style={{ color: '#c8a96e' }}
                       onMouseEnter={(e) => { e.currentTarget.style.color = '#e0c88e'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.color = '#c8a96e'; }}
@@ -290,7 +295,7 @@ const Portfolio: React.FC = () => {
                     </a>
                   )}
 
-                  {/* Links - improved dropdown that stays open while hovering */}
+                  {/* Links dropdown */}
                   {item.links && (
                     <div
                       className="relative inline-block"
@@ -298,17 +303,17 @@ const Portfolio: React.FC = () => {
                       onMouseLeave={() => setShowLinkOptions(null)}
                     >
                       <button
-                        className="inline-flex items-center gap-1.5 text-sm font-mono transition-colors duration-200"
+                        className="inline-flex items-center gap-1 md:gap-1.5 text-[10px] md:text-sm font-mono transition-colors duration-200"
                         style={{ color: '#c8a96e' }}
                         onMouseEnter={(e) => { e.currentTarget.style.color = '#e0c88e'; }}
                         onMouseLeave={(e) => { e.currentTarget.style.color = '#c8a96e'; }}
                       >
-                        View Project Options ↓
+                        View Options ↓
                       </button>
 
                       {showLinkOptions === item.id && (
                         <div
-                          className="absolute left-0 mt-2 rounded-md shadow-lg z-20 min-w-[200px]"
+                          className="absolute left-0 mt-1 md:mt-2 rounded-md shadow-lg z-20 min-w-[140px] md:min-w-[200px]"
                           style={{
                             background: '#141210',
                             border: '1px solid rgba(200, 169, 110, 0.2)',
@@ -323,7 +328,7 @@ const Portfolio: React.FC = () => {
                               href={link.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="block px-4 py-2.5 text-sm font-mono transition-colors duration-200"
+                              className="block px-3 py-2 md:px-4 md:py-2.5 text-[10px] md:text-sm font-mono transition-colors duration-200"
                               style={{ color: '#a8a090' }}
                               onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e'; e.currentTarget.style.background = 'rgba(200, 169, 110, 0.08)'; }}
                               onMouseLeave={(e) => { e.currentTarget.style.color = '#a8a090'; e.currentTarget.style.background = 'transparent'; }}
@@ -341,6 +346,30 @@ const Portfolio: React.FC = () => {
           })}
         </div>
       </div>
+
+      {/* Mobile responsive styles */}
+      <style>{`
+        @media (max-width: 768px) {
+          .line-clamp-1 {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+          .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+          .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+        }
+      `}</style>
     </section>
   );
 };

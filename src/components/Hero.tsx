@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { personalInfo } from '../data/profileData';
 
 const PHOTO_URL =
@@ -68,6 +68,190 @@ const STYLES = `
     border-color:rgba(200,169,110,.4);
     border-style:solid;
   }
+
+  /* ========== MOBILE RESPONSIVE - FOTO TETAP DI SAMPING ========== */
+  @media (max-width: 968px) {
+    .hero-main-layout {
+      gap: 40px !important;
+      padding: 60px 32px !important;
+    }
+    .stat-num {
+      font-size: 24px !important;
+    }
+    .stat-label {
+      font-size: 9px !important;
+    }
+    .stat-divider {
+      height: 32px !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-main-layout {
+      gap: 30px !important;
+      padding: 40px 24px !important;
+    }
+    .hero-left-col {
+      flex: 1 !important;
+    }
+    .hero-name h1 {
+      font-size: clamp(38px, 6vw, 88px) !important;
+    }
+    .hero-sub p {
+      font-size: 13px !important;
+      max-width: 100% !important;
+      margin-bottom: 30px !important;
+    }
+    .role-chip {
+      padding: 4px 10px !important;
+      font-size: 10px !important;
+    }
+    .hero-tag {
+      margin-bottom: 28px !important;
+    }
+    .hero-name {
+      margin-bottom: 20px !important;
+    }
+    .hero-stats {
+      gap: 18px !important;
+      margin-bottom: 36px !important;
+      padding: 16px 0 !important;
+    }
+    .stat-num {
+      font-size: 20px !important;
+    }
+    .stat-num span {
+      font-size: 14px !important;
+    }
+    .stat-label {
+      font-size: 8px !important;
+    }
+    .stat-divider {
+      height: 28px !important;
+    }
+    .cta-primary, .cta-outline {
+      padding: 10px 22px !important;
+      font-size: 11px !important;
+    }
+    /* Foto tetap di samping - ukuran lebih kecil */
+    .hero-img .img-wrap {
+      width: 220px !important;
+      height: 290px !important;
+    }
+    .grid-corner {
+      width: 12px !important;
+      height: 12px !important;
+    }
+    .hero-img .grid-corner {
+      border-width: 1px !important;
+    }
+    .status-badge {
+      padding: 7px 12px !important;
+      gap: 8px !important;
+      bottom: -12px !important;
+      left: -12px !important;
+    }
+    .status-badge span {
+      width: 6px !important;
+      height: 6px !important;
+    }
+    .status-badge p:first-child {
+      font-size: 10px !important;
+    }
+    .status-badge p:last-child {
+      font-size: 9px !important;
+    }
+    /* Outer ring */
+    .hero-img > div:first-child {
+      inset: -15px !important;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero-main-layout {
+      gap: 24px !important;
+      padding: 32px 20px !important;
+    }
+    .hero-name h1 {
+      font-size: clamp(32px, 5.5vw, 72px) !important;
+    }
+    .hero-sub p {
+      font-size: 12px !important;
+      margin-bottom: 24px !important;
+    }
+    .hero-stats {
+      gap: 14px !important;
+      margin-bottom: 30px !important;
+      padding: 12px 0 !important;
+    }
+    .stat-num {
+      font-size: 18px !important;
+    }
+    .stat-label {
+      font-size: 7px !important;
+      letter-spacing: 0.1em !important;
+    }
+    .stat-divider {
+      height: 24px !important;
+    }
+    .cta-primary, .cta-outline {
+      padding: 8px 16px !important;
+      font-size: 10px !important;
+    }
+    .cta-primary svg, .cta-outline svg {
+      width: 12px !important;
+      height: 12px !important;
+    }
+    /* Foto lebih kecil lagi di hp, tetap di samping */
+    .hero-img .img-wrap {
+      width: 180px !important;
+      height: 240px !important;
+    }
+    .status-badge {
+      padding: 5px 10px !important;
+      bottom: -10px !important;
+      left: -10px !important;
+    }
+    .status-badge p:first-child {
+      font-size: 9px !important;
+    }
+    .status-badge p:last-child {
+      font-size: 8px !important;
+    }
+    .hero-img > div:first-child {
+      inset: -12px !important;
+    }
+    .scroll-line {
+      height: 40px !important;
+    }
+    .scroll-indicator span {
+      font-size: 8px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-main-layout {
+      gap: 20px !important;
+    }
+    .hero-img .img-wrap {
+      width: 160px !important;
+      height: 210px !important;
+    }
+    .stat-num {
+      font-size: 16px !important;
+    }
+    .stat-label {
+      font-size: 6px !important;
+    }
+    .role-chip {
+      padding: 3px 8px !important;
+      font-size: 9px !important;
+    }
+    .cta-primary, .cta-outline {
+      padding: 6px 14px !important;
+      font-size: 9px !important;
+    }
+  }
 `;
 
 const Hero: React.FC = () => {
@@ -131,17 +315,19 @@ const Hero: React.FC = () => {
 
         {/* ── main layout ── */}
         <div
+          className="hero-main-layout"
           style={{
             position: 'relative', zIndex: 10,
             width: '100%', maxWidth: '1200px',
             margin: '0 auto', padding: '80px 48px',
             display: 'flex', alignItems: 'center',
             gap: '80px', flexWrap: 'wrap',
+            flexDirection: 'row',
           }}
         >
 
           {/* ══ LEFT COLUMN ══ */}
-          <div style={{ flex: '1 1 440px', minWidth: 0 }}>
+          <div className="hero-left-col" style={{ flex: '1 1 440px', minWidth: 0 }}>
 
             {/* role chips */}
             <div className="hero-tag" style={{ display: 'flex', gap: '8px', marginBottom: '36px', flexWrap: 'wrap' }}>
@@ -286,6 +472,7 @@ const Hero: React.FC = () => {
 
             {/* status badge */}
             <div
+              className="status-badge"
               style={{
                 position: 'absolute', bottom: '-16px', left: '-16px',
                 background: '#141210',
@@ -343,6 +530,7 @@ const Hero: React.FC = () => {
 
         {/* ── scroll indicator ── */}
         <div
+          className="scroll-indicator"
           style={{
             position: 'absolute', bottom: '32px', left: '50%',
             transform: 'translateX(-50%)',
