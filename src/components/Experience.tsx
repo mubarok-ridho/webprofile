@@ -124,7 +124,7 @@ const Experience: React.FC = () => {
 
         {/* Experience Cards - PC: 1 kolom, Mobile: 1 kolom dengan spacing rapi */}
         <div className="flex flex-col gap-6 md:gap-8 lg:gap-10">
-          {experiences.map((exp, index) => (
+          {experiences.map((exp) => (
             <div
               key={exp.id}
               className="group rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl w-full"
@@ -181,7 +181,7 @@ const Experience: React.FC = () => {
                       </p>
                     )}
                     
-                    {/* Period badge - diletakkan di bawah location untuk mobile, di samping untuk desktop via CSS */}
+                    {/* Period badge */}
                     <div className="mt-2">
                       <span
                         className="inline-block px-3 py-1.5 rounded-md text-[10px] md:text-xs lg:text-sm font-mono tracking-wider"
