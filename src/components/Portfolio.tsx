@@ -105,31 +105,24 @@ const Portfolio: React.FC = () => {
     }
   };
 
-  const getLogoSize = (title: string, isDoubleLogo: boolean, _idx?: number) => {
-    if (title === 'MODU') {
-      return 'w-20 h-20 md:w-28 md:h-28';
-    }
-    if (title === 'CLAIRE') {
-      return 'w-20 h-20 md:w-28 md:h-28';
+  const getLogoSize = (title: string, isDoubleLogo: boolean) => {
+    if (title === 'MODU' || title === 'CLAIRE') {
+      return 'w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20';
     }
     if (title === 'Corporate Web Profiles') {
-      return 'w-16 h-16 md:w-24 md:h-24';
+      return 'w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16';
     }
-    return isDoubleLogo ? 'w-12 h-12 md:w-16 md:h-16' : 'w-14 h-14 md:w-20 md:h-20';
+    return isDoubleLogo ? 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14' : 'w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16';
   };
 
   const toggleExpand = (id: number) => {
-    if (expandedCard === id) {
-      setExpandedCard(null);
-    } else {
-      setExpandedCard(id);
-    }
+    setExpandedCard(expandedCard === id ? null : id);
   };
 
   return (
     <section
       id="portfolio"
-      className="py-20 relative overflow-hidden"
+      className="py-16 md:py-20 lg:py-24 relative overflow-hidden"
       style={{ background: '#0c0b09' }}
     >
       {/* Subtle grid texture */}
@@ -138,38 +131,39 @@ const Portfolio: React.FC = () => {
           position: 'absolute',
           inset: 0,
           pointerEvents: 'none',
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px)',
-          backgroundSize: '80px 80px',
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)',
+          backgroundSize: '60px 60px',
         }}
       />
 
-      <div className="container mx-auto px-4 md:px-6 max-w-7xl relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         {/* Section header */}
-        <div className="text-center mb-10 md:mb-14">
+        <div className="text-center mb-12 md:mb-16">
           <p
-            className="text-xs md:text-sm tracking-widest uppercase mb-2 md:mb-3"
-            style={{ color: '#8a8580', fontFamily: "'Montserrat', monospace" }}
+            className="text-xs md:text-sm tracking-[0.2em] uppercase mb-2 md:mb-3"
+            style={{ color: '#8a8580', fontFamily: "'DM Mono', monospace" }}
           >
             My Work
           </p>
           <h2
-            className="text-2xl md:text-4xl font-bold mb-3 md:mb-4"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4"
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "'DM Serif Display', serif",
               color: '#f0ece4',
-              fontWeight: 600,
+              fontWeight: 400,
             }}
           >
             Portfolio
           </h2>
           <div
-            className="w-10 md:w-12 h-px mx-auto rounded-full"
+            className="w-12 h-px mx-auto rounded-full"
             style={{ background: '#c8a96e' }}
           />
         </div>
 
         {/* Portfolio grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-8">
           {portfolios.map((item) => {
             const statusStyle = getStatusStyle(item.status);
             const isDoubleLogo = Array.isArray(item.logo);
@@ -179,16 +173,20 @@ const Portfolio: React.FC = () => {
             return (
               <div
                 key={item.id}
-                className={`group rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
-                  isExpanded ? 'ring-1 ring-[#c8a96e]/30' : ''
-                }`}
+                className="group relative rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1"
                 style={{
                   background: 'rgba(20, 18, 16, 0.8)',
-                  border: '1px solid rgba(200, 169, 110, 0.15)',
+                  border: '1px solid rgba(200, 169, 110, 0.12)',
                 }}
               >
+                {/* Dekorasi garis di kiri card */}
+                <div
+                  className="absolute left-0 top-0 bottom-0 w-0.5 transition-all duration-300 group-hover:w-1"
+                  style={{ background: '#c8a96e', opacity: 0.6 }}
+                />
+
                 {/* Image preview */}
-                <div className="relative w-full h-36 md:h-56 overflow-hidden bg-[#1a1814]">
+                <div className="relative w-full h-40 sm:h-44 md:h-48 overflow-hidden bg-[#1a1814]">
                   <img
                     src={item.previewImage}
                     alt={item.title}
@@ -198,11 +196,10 @@ const Portfolio: React.FC = () => {
 
                   {/* Status badge */}
                   <div
-                    className="absolute top-2 right-2 md:top-3 md:right-3 px-1.5 py-0.5 md:px-2.5 md:py-1 rounded-sm text-[8px] md:text-[10px] font-mono tracking-wider font-semibold"
+                    className="absolute top-2 right-2 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded text-[8px] sm:text-[9px] md:text-[10px] font-mono font-semibold uppercase tracking-wider"
                     style={{
-                      background: statusStyle.bg,
+                      background: `${statusStyle.bg}cc`,
                       color: '#ffffff',
-                      border: `1px solid ${statusStyle.border}`,
                       backdropFilter: 'blur(4px)',
                     }}
                   >
@@ -211,65 +208,65 @@ const Portfolio: React.FC = () => {
                 </div>
 
                 {/* Content */}
-                <div className="p-3 md:p-6">
-                  {/* Logo section */}
-                  <div className="mb-2 md:mb-5">
+                <div className="p-4 sm:p-5 md:p-6">
+                  {/* Logo - tetap PNG */}
+                  <div className="mb-3 sm:mb-4 md:mb-5">
                     {isDoubleLogo ? (
-                      <div className="flex items-center gap-2 md:gap-5">
-                        {(Array.isArray(item.logo) ? item.logo : [item.logo]).map((logo, idx) => {
-                          const logoSize = getLogoSize(item.title, isDoubleLogo, idx);
-                          return (
-                            <img
-                              key={idx}
-                              src={logo}
-                              alt={`Company logo ${idx + 1}`}
-                              className={`${logoSize} object-contain`}
-                            />
-                          );
-                        })}
+                      <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                        {(item.logo as string[]).map((logo, idx) => (
+                          <img
+                            key={idx}
+                            src={logo}
+                            alt={`Company logo ${idx + 1}`}
+                            className={`${getLogoSize(item.title, true)} object-contain`}
+                            style={{ background: 'transparent' }}
+                          />
+                        ))}
                       </div>
                     ) : (
                       <img
                         src={item.logo as string}
                         alt={`${item.title} logo`}
                         className={`${getLogoSize(item.title, false)} object-contain`}
+                        style={{ background: 'transparent' }}
                       />
                     )}
                   </div>
 
                   {/* Title */}
                   <h3
-                    className="text-sm md:text-xl font-semibold mb-1 md:mb-2 line-clamp-1"
+                    className="text-base sm:text-lg md:text-xl font-semibold mb-1 sm:mb-2"
                     style={{
-                      fontFamily: "'Montserrat', serif",
+                      fontFamily: "'Outfit', sans-serif",
                       color: '#f0ece4',
+                      fontWeight: 500,
                     }}
                   >
                     {item.title}
                   </h3>
 
+                  {/* Dekorasi garis bawah title */}
+                  <div
+                    className="w-8 h-px mb-3 sm:mb-4 transition-all duration-300 group-hover:w-12"
+                    style={{ background: '#c8a96e', opacity: 0.5 }}
+                  />
+
                   {/* Description */}
                   <p
-                    className="hidden md:block text-sm leading-relaxed mb-4 line-clamp-3"
+                    className="text-[11px] sm:text-xs md:text-sm leading-relaxed mb-3 sm:mb-4"
                     style={{ color: '#a8a090', lineHeight: 1.6 }}
                   >
-                    {item.description}
-                  </p>
-                  
-                  {/* Short description for mobile */}
-                  <p
-                    className="text-[10px] md:hidden leading-relaxed mb-2 line-clamp-2"
-                    style={{ color: '#a8a090', lineHeight: 1.4 }}
-                  >
-                    {item.description.length > 80 ? item.description.substring(0, 80) + '...' : item.description}
+                    {item.description.length > 100 && window.innerWidth < 640
+                      ? `${item.description.substring(0, 100)}...`
+                      : item.description}
                   </p>
 
                   {/* Tech stack */}
-                  <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-5">
+                  <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-4 sm:mb-5">
                     {item.techStack.slice(0, 3).map((tech, idx) => (
                       <span
                         key={idx}
-                        className="px-1.5 py-0.5 md:px-2 md:py-1 text-[7px] md:text-[10px] rounded-sm font-mono tracking-wide"
+                        className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-[7px] sm:text-[8px] md:text-[9px] rounded font-mono"
                         style={{
                           background: 'rgba(200, 169, 110, 0.1)',
                           color: '#c8c0b4',
@@ -281,7 +278,7 @@ const Portfolio: React.FC = () => {
                     ))}
                     {item.techStack.length > 3 && (
                       <span
-                        className="px-1.5 py-0.5 md:px-2 md:py-1 text-[7px] md:text-[10px] rounded-sm font-mono"
+                        className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-[7px] sm:text-[8px] md:text-[9px] rounded font-mono"
                         style={{
                           background: 'rgba(200, 169, 110, 0.08)',
                           color: '#6a6560',
@@ -292,41 +289,47 @@ const Portfolio: React.FC = () => {
                     )}
                   </div>
 
-                  {/* Links - Special handling for Corporate Web Profiles with expandable dropdown */}
+                  {/* Links */}
                   {item.link && !hasLinks && (
                     <a
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 md:gap-1.5 text-[10px] md:text-sm font-mono transition-colors duration-200"
+                      className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-mono transition-all duration-200"
                       style={{ color: '#c8a96e' }}
-                      onMouseEnter={(e) => { e.currentTarget.style.color = '#e0c88e'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.color = '#c8a96e'; }}
                     >
-                      View Project →
+                      <span>View Project</span>
+                      <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                      </svg>
                     </a>
                   )}
 
-                  {/* Expandable dropdown for Corporate Web Profiles */}
                   {hasLinks && (
                     <div className="w-full">
                       <button
                         onClick={() => toggleExpand(item.id)}
-                        className="inline-flex items-center gap-1 md:gap-1.5 text-[10px] md:text-sm font-mono transition-colors duration-200"
+                        className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-mono transition-colors duration-200"
                         style={{ color: '#c8a96e' }}
-                        onMouseEnter={(e) => { e.currentTarget.style.color = '#e0c88e'; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.color = '#c8a96e'; }}
                       >
-                        {isExpanded ? 'Hide Options ↑' : 'View Options ↓'}
+                        {isExpanded ? 'Hide Options' : 'View Options'}
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                        >
+                          <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                        </svg>
                       </button>
 
-                      {/* Expandable dropdown menu */}
                       {isExpanded && (
                         <div
-                          className="mt-2 md:mt-3 rounded-md shadow-lg w-full overflow-hidden transition-all duration-300"
+                          className="mt-2 rounded-md overflow-hidden"
                           style={{
                             background: '#141210',
-                            border: '1px solid rgba(200, 169, 110, 0.2)',
+                            border: '1px solid rgba(200, 169, 110, 0.15)',
                           }}
                         >
                           {item.links?.map((link, idx) => (
@@ -335,18 +338,20 @@ const Portfolio: React.FC = () => {
                               href={link.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="block px-3 py-2 md:px-4 md:py-3 text-[10px] md:text-sm font-mono transition-colors duration-200 border-b last:border-b-0"
-                              style={{ 
+                              className="block px-3 py-2 text-[10px] sm:text-xs font-mono transition-all duration-200 border-b last:border-b-0"
+                              style={{
                                 color: '#a8a090',
-                                borderColor: 'rgba(200, 169, 110, 0.1)'
+                                borderColor: 'rgba(200, 169, 110, 0.08)'
                               }}
-                              onMouseEnter={(e) => { 
-                                e.currentTarget.style.color = '#c8a96e'; 
-                                e.currentTarget.style.background = 'rgba(200, 169, 110, 0.08)'; 
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.color = '#c8a96e';
+                                e.currentTarget.style.background = 'rgba(200, 169, 110, 0.05)';
+                                e.currentTarget.style.paddingLeft = '16px';
                               }}
-                              onMouseLeave={(e) => { 
-                                e.currentTarget.style.color = '#a8a090'; 
-                                e.currentTarget.style.background = 'transparent'; 
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.color = '#a8a090';
+                                e.currentTarget.style.background = 'transparent';
+                                e.currentTarget.style.paddingLeft = '12px';
                               }}
                             >
                               {link.name}
@@ -362,30 +367,6 @@ const Portfolio: React.FC = () => {
           })}
         </div>
       </div>
-
-      {/* Mobile responsive styles */}
-      <style>{`
-        @media (max-width: 768px) {
-          .line-clamp-1 {
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-          }
-          .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-          }
-          .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-          }
-        }
-      `}</style>
     </section>
   );
 };

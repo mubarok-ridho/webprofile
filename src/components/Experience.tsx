@@ -32,7 +32,7 @@ const Experience: React.FC = () => {
       location: 'Sleman, Yogyakarta (On-Site)',
       period: 'Jan 2026 - Mar 2026',
       description: [
-        'Developed and deployed full-stack web (React Typescript) microservices backends using Go.',
+        'Developed and deployed full-stack web (React TypeScript) microservices backends using Go.',
         'Designed and managed PostgreSQL databases for production-ready applications.',
         'Resolving minor bugs, and enhance the selected features.',
       ],
@@ -55,7 +55,7 @@ const Experience: React.FC = () => {
       id: 4,
       position: 'Research Assistant',
       company: 'Universitas Amikom Purwokerto',
-      location: 'Purwokerto, Central Java',
+      location: 'Purwokerto, Central Java (On-Site)',
       period: 'Sep 2023 – Dec 2025',
       description: [
         'Handling courses in the field of programming, such as web programming, mobile programming, object oriented programming, data structure and algorithm, distributed systems, database systems, machine learning, and computer vision.',
@@ -68,7 +68,7 @@ const Experience: React.FC = () => {
   return (
     <section
       id="experience"
-      className="py-20 relative overflow-hidden"
+      className="py-16 md:py-20 lg:py-24 relative overflow-hidden"
       style={{ background: '#0c0b09' }}
     >
       {/* Subtle grid texture */}
@@ -78,26 +78,40 @@ const Experience: React.FC = () => {
           inset: 0,
           pointerEvents: 'none',
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px)',
-          backgroundSize: '80px 80px',
+            'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
+          backgroundSize: '60px 60px',
         }}
       />
 
-      <div className="container mx-auto px-6 max-w-7xl relative z-10">
+      {/* Warm radial glow */}
+      <div
+        style={{
+          position: 'absolute',
+          right: '-20%',
+          top: '20%',
+          width: '500px',
+          height: '500px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(200,140,60,0.05) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-5xl relative z-10">
         {/* Section header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10 md:mb-14 lg:mb-16">
           <p
-            className="text-sm tracking-widest uppercase mb-3"
-            style={{ color: '#8a8580', fontFamily: "'Montserrat', monospace" }}
+            className="text-xs md:text-sm tracking-[0.2em] uppercase mb-2 md:mb-3"
+            style={{ color: '#8a8580', fontFamily: "'DM Mono', monospace" }}
           >
             Professional Journey
           </p>
           <h2
-            className="text-3xl md:text-4xl font-bold mb-4"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4"
             style={{
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "'DM Serif Display', serif",
               color: '#f0ece4',
-              fontWeight: 600,
+              fontWeight: 400,
             }}
           >
             Work Experience
@@ -108,112 +122,122 @@ const Experience: React.FC = () => {
           />
         </div>
 
-        {/* Experience Cards - Grid layout untuk side by side */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {experiences.map((exp) => (
+        {/* Experience Cards - PC: 1 kolom, Mobile: 1 kolom dengan spacing rapi */}
+        <div className="flex flex-col gap-6 md:gap-8 lg:gap-10">
+          {experiences.map((exp, index) => (
             <div
               key={exp.id}
-              className="group rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1 h-full flex flex-col"
+              className="group rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl w-full"
               style={{
-                background: 'rgba(20, 18, 16, 0.8)',
+                background: 'rgba(20, 18, 16, 0.85)',
                 border: '1px solid rgba(200, 169, 110, 0.15)',
+                backdropFilter: 'blur(0px)',
               }}
             >
-              <div className="p-6 flex flex-col h-full">
-                {/* Header with logo and company info */}
-                <div className="flex items-start gap-4 mb-4">
-                  {/* Company Logo */}
-                  <div className="flex-shrink-0">
+              <div className="p-5 md:p-7 lg:p-8">
+                {/* Header: Logo + Company Info - Responsive layout */}
+                <div className="flex flex-col sm:flex-row sm:items-start gap-4 md:gap-6 mb-5 md:mb-6">
+                  {/* Company Logo - Tetap PNG */}
+                  <div className="flex-shrink-0 self-start">
                     <img
                       src={exp.logo}
                       alt={`${exp.company} logo`}
-                      className="w-14 h-14 md:w-16 md:h-16 object-contain"
+                      className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain rounded-lg"
+                      style={{ background: 'transparent' }}
                     />
                   </div>
 
-                  {/* Position and Company */}
+                  {/* Position and Company Info */}
                   <div className="flex-1 min-w-0">
                     <h3
-                      className="text-base md:text-lg font-semibold mb-1 line-clamp-2"
+                      className="text-lg md:text-xl lg:text-2xl font-semibold mb-2"
                       style={{
-                        fontFamily: "'Poppins', serif",
+                        fontFamily: "'Outfit', sans-serif",
                         color: '#f0ece4',
+                        fontWeight: 500,
                       }}
                     >
                       {exp.position}
                     </h3>
                     <p
-                      className="text-xs md:text-sm font-mono tracking-wide truncate"
+                      className="text-sm md:text-base lg:text-lg font-medium mb-1"
                       style={{
                         color: '#c8a96e',
-                        fontFamily: "'Poppins', monospace",
+                        fontFamily: "'DM Mono', monospace",
+                        letterSpacing: '0.02em',
                       }}
                     >
                       {exp.company}
                     </p>
                     {exp.location && (
                       <p
-                        className="text-[10px] md:text-xs font-mono mt-0.5 truncate"
+                        className="text-xs md:text-sm mb-2"
                         style={{
                           color: '#6a6560',
-                          fontFamily: "'Poppins', monospace",
+                          fontFamily: "'DM Mono', monospace",
                         }}
                       >
                         {exp.location}
                       </p>
                     )}
+                    
+                    {/* Period badge - diletakkan di bawah location untuk mobile, di samping untuk desktop via CSS */}
+                    <div className="mt-2">
+                      <span
+                        className="inline-block px-3 py-1.5 rounded-md text-[10px] md:text-xs lg:text-sm font-mono tracking-wider"
+                        style={{
+                          background: 'rgba(200, 169, 110, 0.12)',
+                          color: '#c8c0b4',
+                          border: '1px solid rgba(200, 169, 110, 0.25)',
+                        }}
+                      >
+                        {exp.period}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Period badge */}
-                <div className="mb-4">
-                  <span
-                    className="inline-block px-2 py-0.5 rounded-sm text-[9px] md:text-[10px] font-mono tracking-wider"
-                    style={{
-                      background: 'rgba(200, 169, 110, 0.15)',
-                      color: '#c8c0b4',
-                    }}
-                  >
-                    {exp.period}
-                  </span>
-                </div>
-
                 {/* Description list */}
-                <ul className="space-y-2 flex-1">
-                  {exp.description.map((item, index) => (
-                    <li
-                      key={index}
-                      className="text-xs md:text-sm leading-relaxed flex items-start gap-2"
-                      style={{ color: '#a8a090', lineHeight: 1.5 }}
-                    >
-                      <span
-                        className="inline-block w-1 h-1 rounded-full mt-1.5 flex-shrink-0"
-                        style={{ background: '#c8a96e' }}
-                      />
-                      <span className="flex-1">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-4 md:mt-5">
+                  <ul className="space-y-2.5 md:space-y-3">
+                    {exp.description.map((item, idx) => (
+                      <li
+                        key={idx}
+                        className="text-xs md:text-sm lg:text-base leading-relaxed flex items-start gap-3"
+                        style={{ color: '#a8a090', lineHeight: 1.6 }}
+                      >
+                        <span
+                          className="inline-block w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
+                          style={{ background: '#c8a96e' }}
+                        />
+                        <span className="flex-1">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Mobile responsive styles */}
+      {/* Responsive styles */}
       <style>{`
-        @media (max-width: 768px) {
-          .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+        @media (max-width: 640px) {
+          .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
           }
-          .truncate {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
+        }
+        
+        /* Smooth transitions */
+        .group {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Logo image tetap PNG - no filters */
+        img {
+          image-rendering: crisp-edges;
         }
       `}</style>
     </section>

@@ -93,7 +93,7 @@ const Education: React.FC = () => {
   return (
     <section
       id="education"
-      className="py-20 relative overflow-hidden"
+      className="py-16 md:py-20 lg:py-24 relative overflow-hidden"
       style={{ background: '#0c0b09' }}
     >
       {/* Subtle grid texture */}
@@ -102,26 +102,27 @@ const Education: React.FC = () => {
           position: 'absolute',
           inset: 0,
           pointerEvents: 'none',
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px)',
-          backgroundSize: '80px 80px',
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)',
+          backgroundSize: '60px 60px',
         }}
       />
 
-      <div className="container mx-auto px-6 max-w-5xl relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
         {/* Education Section Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10 md:mb-14 lg:mb-16">
           <p
-            className="text-sm tracking-widest uppercase mb-3"
-            style={{ color: '#8a8580', fontFamily: "'Montserrat', monospace" }}
+            className="text-xs md:text-sm tracking-[0.2em] uppercase mb-2 md:mb-3"
+            style={{ color: '#8a8580', fontFamily: "'DM Mono', monospace" }}
           >
             My Academic Background
           </p>
           <h2
-            className="text-3xl md:text-4xl font-bold mb-4"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4"
             style={{
-              fontFamily: "'Poppins', serif",
+              fontFamily: "'DM Serif Display', serif",
               color: '#f0ece4',
-              fontWeight: 600,
+              fontWeight: 400,
             }}
           >
             Education
@@ -132,85 +133,96 @@ const Education: React.FC = () => {
           />
         </div>
 
-        {/* Education Card - GPA on the right side */}
-        <div className="mb-16">
+        {/* Education Card - Layout lebih rapi untuk mobile */}
+        <div className="mb-12 md:mb-16 lg:mb-20">
           {educations.map((edu) => (
             <div
               key={edu.id}
-              className="rounded-lg overflow-hidden transition-all duration-300"
+              className="rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
               style={{
-                background: 'rgba(20, 18, 16, 0.8)',
-                border: '1px solid rgba(200, 169, 110, 0.15)',
+                background: 'rgba(20, 18, 16, 0.85)',
+                border: '1px solid rgba(200, 169, 110, 0.12)',
               }}
             >
-              <div className="p-6">
-                <div className="flex items-start justify-between">
-                  {/* Left side - Logo and details */}
-                  <div className="flex items-center gap-5 flex-1">
-                    <img
-                      src={edu.logo}
-                      alt={edu.institution}
-                      className="w-20 h-20 object-contain"
-                    />
-                    <div>
-                      <h3
-                        className="text-xl font-semibold mb-1"
-                        style={{
-                          fontFamily: "'Montserrat', serif",
-                          color: '#f0ece4',
-                        }}
-                      >
-                        {edu.degree}
-                      </h3>
-                      <p
-                        className="text-sm font-mono tracking-wide mb-2"
-                        style={{
-                          color: '#c8a96e',
-                          fontFamily: "'Poppins', monospace",
-                        }}
-                      >
-                        {edu.institution}
-                      </p>
-                      <span
-                        className="px-2 py-0.5 rounded-sm text-[10px] font-mono tracking-wider"
-                        style={{
-                          background: 'rgba(200, 169, 110, 0.15)',
-                          color: '#c8c0b4',
-                          fontFamily: "'Poppins', monospace",
-                        }}
-                      >
-                        {edu.year}
-                      </span>
-                    </div>
+              <div className="p-5 sm:p-6 md:p-7">
+                {/* Mobile: stacked layout, Desktop: row layout */}
+                
+                {/* Baris 1: Logo + Degree (mobile & desktop) */}
+                <div className="flex items-center gap-4 sm:gap-5 mb-4">
+                  <img
+                    src={edu.logo}
+                    alt={edu.institution}
+                    className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain rounded-lg flex-shrink-0"
+                    style={{ background: 'transparent' }}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <h3
+                      className="text-base sm:text-lg md:text-xl font-semibold mb-1"
+                      style={{
+                        fontFamily: "'Outfit', sans-serif",
+                        color: '#f0ece4',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {edu.degree}
+                    </h3>
+                    <p
+                      className="text-xs sm:text-sm font-mono tracking-wide"
+                      style={{
+                        color: '#c8a96e',
+                        fontFamily: "'DM Mono', monospace",
+                      }}
+                    >
+                      {edu.institution}
+                    </p>
                   </div>
+                </div>
 
-                  {/* Right side - GPA */}
+                {/* Baris 2: Year + GPA (side by side di mobile) */}
+                <div className="flex flex-row items-center justify-between gap-3 mb-4">
+                  <span
+                    className="inline-block px-2 py-1 rounded text-[9px] sm:text-[10px] font-mono tracking-wider"
+                    style={{
+                      background: 'rgba(200, 169, 110, 0.12)',
+                      color: '#c8c0b4',
+                      border: '1px solid rgba(200, 169, 110, 0.15)',
+                    }}
+                  >
+                    {edu.year}
+                  </span>
+
                   {edu.gpa && (
-                    <div className="text-right">
-                      <p
-                        className="text-[9px] font-mono tracking-wider mb-1"
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="text-[8px] sm:text-[9px] font-mono tracking-wider"
                         style={{ color: '#6a6560' }}
                       >
                         GPA
-                      </p>
-                      <p
-                        className="text-3xl font-bold"
+                      </span>
+                      <span
+                        className="text-lg sm:text-xl md:text-2xl font-bold"
                         style={{
                           fontFamily: "'DM Serif Display', serif",
                           color: '#c8a96e',
                           lineHeight: 1,
-                          fontSize: '2.25rem',
                         }}
                       >
                         {edu.gpa}
-                      </p>
+                      </span>
                     </div>
                   )}
                 </div>
 
+                {/* Garis pemisah */}
+                <div
+                  className="h-px w-full my-3"
+                  style={{ background: 'rgba(200, 169, 110, 0.08)' }}
+                />
+
+                {/* Baris 3: Description */}
                 {edu.description && (
                   <p
-                    className="text-sm leading-relaxed mt-4"
+                    className="text-xs sm:text-sm leading-relaxed"
                     style={{ color: '#a8a090', lineHeight: 1.6 }}
                   >
                     {edu.description}
@@ -222,84 +234,89 @@ const Education: React.FC = () => {
         </div>
 
         {/* Research & Study Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-10 md:mb-12 lg:mb-14">
           <p
-            className="text-sm tracking-widest uppercase mb-3"
-            style={{ color: '#8a8580', fontFamily: "'Montserrat', monospace" }}
+            className="text-xs md:text-sm tracking-[0.2em] uppercase mb-2 md:mb-3"
+            style={{ color: '#8a8580', fontFamily: "'DM Mono', monospace" }}
           >
             My Contributions
           </p>
           <h2
-            className="text-3xl md:text-4xl font-bold mb-4"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4"
             style={{
-              fontFamily: "Poppins, serif",
+              fontFamily: "'DM Serif Display', serif",
               color: '#f0ece4',
-              fontWeight: 600,
+              fontWeight: 400,
             }}
           >
             Research & Study
           </h2>
           <div
             className="w-12 h-px mx-auto rounded-full"
-            style={{
-              background: '#c8a96e',
-              fontFamily: "'Poppins', serif",
-            }}
+            style={{ background: '#c8a96e' }}
           />
         </div>
 
         {/* Research Cards Grid */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 lg:gap-7">
           {researchStudies.map((research) => (
             <div
               key={research.id}
-              className="rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1"
+              className="group rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               style={{
-                background: 'rgba(20, 18, 16, 0.8)',
-                border: '1px solid rgba(200, 169, 110, 0.15)',
+                background: 'rgba(20, 18, 16, 0.85)',
+                border: '1px solid rgba(200, 169, 110, 0.12)',
               }}
             >
-              <div className="p-6">
-                {/* Logos - No frame, larger size */}
-                <div className="flex items-center gap-4 mb-4 flex-wrap">
+              <div className="p-5 sm:p-6">
+                {/* Logos */}
+                <div className="flex items-center gap-3 sm:gap-4 mb-4 flex-wrap">
                   {research.logos.map((logo, idx) => (
                     <img
                       key={idx}
                       src={logo}
                       alt={`Logo ${idx + 1}`}
-                      className="h-12 w-auto object-contain"
-                      style={{ maxWidth: '100px' }}
+                      className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+                      style={{ 
+                        background: 'transparent',
+                        maxWidth: '80px',
+                      }}
                     />
                   ))}
                 </div>
 
                 {/* Title */}
                 <h3
-                  className="text-base font-semibold mb-2 leading-relaxed"
+                  className="text-sm sm:text-base md:text-lg font-semibold mb-2 leading-relaxed"
                   style={{
-                    fontFamily: "'Poppins', serif",
+                    fontFamily: "'Outfit', sans-serif",
                     color: '#f0ece4',
-                    fontWeight: 600,
-                    fontSize: '1.125rem',
+                    fontWeight: 500,
                   }}
                 >
                   {research.title}
                 </h3>
 
+                {/* Dekorasi garis */}
+                <div
+                  className="w-8 h-px mb-3 transition-all duration-300 group-hover:w-12"
+                  style={{ background: '#c8a96e', opacity: 0.4 }}
+                />
+
                 {/* Funder & Year */}
-                <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
                   <p
-                    className="text-[11px] font-mono tracking-wide"
-                    style={{ color: '#c8a96e', fontFamily: "'Poppins', monospace" }}
+                    className="text-[10px] sm:text-[11px] md:text-xs font-mono tracking-wide"
+                    style={{ color: '#c8a96e', fontFamily: "'DM Mono', monospace" }}
                   >
-                    {research.funder}
+                    {research.funder.length > 60 ? `${research.funder.substring(0, 60)}...` : research.funder}
                   </p>
                   <span
-                    className="px-2 py-0.5 rounded-sm text-[9px] font-mono"
+                    className="inline-block px-2 py-0.5 rounded text-[8px] sm:text-[9px] font-mono self-start sm:self-auto"
                     style={{
                       background: 'rgba(200, 169, 110, 0.1)',
                       color: '#8a8580',
-                      fontFamily: "'Poppins', monospace",
+                      border: '1px solid rgba(200, 169, 110, 0.1)',
                     }}
                   >
                     {research.year}
@@ -307,21 +324,18 @@ const Education: React.FC = () => {
                 </div>
 
                 {/* Descriptions */}
-                <ul className="space-y-2">
+                <ul className="space-y-2 sm:space-y-2.5">
                   {research.descriptions.map((desc, idx) => (
                     <li
                       key={idx}
-                      className="text-xs leading-relaxed flex items-start gap-2"
-                      style={{ color: '#a8a090', lineHeight: 1.5, fontFamily: "'Poppins', monospace" }}
+                      className="text-[10px] sm:text-xs leading-relaxed flex items-start gap-2"
+                      style={{ color: '#a8a090', lineHeight: 1.6 }}
                     >
                       <span
                         className="inline-block w-1 h-1 rounded-full mt-1.5 flex-shrink-0"
-                        style={{
-                          background: '#c8a96e',
-                          fontFamily: "'Poppins', monospace",
-                        }}
+                        style={{ background: '#c8a96e' }}
                       />
-                      <span>{desc}</span>
+                      <span className="flex-1">{desc}</span>
                     </li>
                   ))}
                 </ul>
