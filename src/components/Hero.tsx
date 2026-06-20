@@ -1,6 +1,6 @@
 import React from 'react';
 import { personalInfo } from '../data/profileData';
-import ThemeToggle from './ThemeToggle';
+// import ThemeToggle from './ThemeToggle';
 
 const PHOTO_URL =
   'https://res.cloudinary.com/doafwrddd/image/upload/v1777464247/wmremove-transformed_4_qkvhin.jpg';
@@ -79,10 +79,10 @@ const STYLES = `
     flex-shrink: 0;
   }
 
-  /* ── desktop toggle slot ── */
-  .desktop-toggle-slot {
-    position: absolute; top: 32px; right: 48px; z-index: 20;
-  }
+  // /* ── desktop toggle slot ── */
+  // .desktop-toggle-slot {
+  //   position: absolute; top: 32px; right: 48px; z-index: 20;
+  // }
 
   /* ── scroll indicator ── */
   .scroll-line {
@@ -416,10 +416,10 @@ const Hero: React.FC = () => {
           border:'1px solid var(--border)', pointerEvents:'none' }}
         />
 
-        {/* ── day/night toggle (desktop) ── */}
+        {/* ── day/night toggle (desktop) ──
         <div className="desktop-toggle-slot">
           <ThemeToggle />
-        </div>
+        </div> */}
 
         {/* ══ DESKTOP MAIN LAYOUT ══ */}
         <div
@@ -581,10 +581,10 @@ const Hero: React.FC = () => {
           <div className="m-grid" />
           <div className="m-accent-left" />
 
-          {/* Day/night toggle — fixed corner, independent of the chip row */}
+          {/* Day/night toggle — fixed corner, independent of the chip row
           <div className="mobile-toggle-slot">
             <ThemeToggle />
-          </div>
+          </div> */}
 
           {/* Konten di atas foto */}
           <div className="m-content">

@@ -1,7 +1,6 @@
 import React from 'react';
 import { personalInfo } from '../data/profileData';
 
-// SVG Icons
 const IconMail = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
     <rect x="2" y="4" width="20" height="16" rx="3" />
@@ -21,37 +20,59 @@ const IconLinkedin = () => (
   </svg>
 );
 
+const IconArrowUp = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4">
+    <path d="M12 19V5" />
+    <path d="m5 12 7-7 7 7" />
+  </svg>
+);
+
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <footer
       className="relative overflow-hidden"
-      style={{ background: '#0c0b09' }}
+      style={{ background: 'var(--bg)', transition: 'background-color .3s ease' }}
     >
-      {/* Subtle top border */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-md h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, #c8a96e, transparent)' }}
+        style={{ background: 'linear-gradient(90deg, transparent, var(--accent), transparent)' }}
       />
 
-      {/* Subtle grid texture */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
           pointerEvents: 'none',
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(var(--grid-line) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
         }}
       />
 
-      <div className="container mx-auto px-6 max-w-5xl relative z-10 py-12">
-        {/* Get in Touch Section */}
-        <div className="text-center mb-8">
+      <div
+        style={{
+          position: 'absolute',
+          left: '50%',
+          top: 0,
+          transform: 'translate(-50%, -50%)',
+          width: '500px',
+          height: '300px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, var(--accent-glow-bg) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <div className="container mx-auto px-6 max-w-5xl relative z-10 py-12 md:py-16">
+        <div className="text-center mb-10">
           <p
             className="text-sm tracking-widest uppercase mb-3"
-            style={{ color: '#8a8580', fontFamily: "'Montserrat', monospace" }}
+            style={{ color: 'var(--text-secondary)', fontFamily: "'Montserrat', monospace", transition: 'color .3s ease' }}
           >
             Let's Connect
           </p>
@@ -59,55 +80,94 @@ const Footer: React.FC = () => {
             className="text-2xl md:text-3xl font-bold mb-4"
             style={{
               fontFamily: "'DM Serif Display', serif",
-              color: '#f0ece4',
+              color: 'var(--text-primary)',
               fontWeight: 400,
+              transition: 'color .3s ease',
             }}
           >
             Get in Touch
           </h3>
           <div
             className="w-12 h-px mx-auto rounded-full"
-            style={{ background: '#c8a96e' }}
+            style={{ background: 'var(--accent)', transition: 'background-color .3s ease' }}
           />
         </div>
 
-        {/* Contact Links */}
-        <div className="flex justify-center gap-8 mb-8 flex-wrap">
+        <div className="flex justify-center gap-4 sm:gap-8 mb-10 flex-wrap">
           <a
             href={`mailto:${personalInfo.email}`}
-            className="group flex items-center gap-2 transition-all duration-200"
-            style={{ color: '#a8a090' }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = '#a8a090'; }}
+            className="group flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all duration-200"
+            style={{
+              color: 'var(--text-secondary)',
+              border: '1px solid var(--border)',
+              background: 'var(--accent-soft)',
+              transition: 'color .3s ease, border-color .3s ease, background-color .3s ease, transform .2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = 'var(--accent)';
+              e.currentTarget.style.borderColor = 'var(--accent-translucent)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = 'var(--text-secondary)';
+              e.currentTarget.style.borderColor = 'var(--border)';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
           >
             <IconMail />
             <span className="text-sm font-mono tracking-wide">Email</span>
           </a>
-          
+
           {personalInfo.github && (
             <a
               href={personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 transition-all duration-200"
-              style={{ color: '#a8a090' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#a8a090'; }}
+              className="group flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all duration-200"
+              style={{
+                color: 'var(--text-secondary)',
+                border: '1px solid var(--border)',
+                background: 'var(--accent-soft)',
+                transition: 'color .3s ease, border-color .3s ease, background-color .3s ease, transform .2s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'var(--accent)';
+                e.currentTarget.style.borderColor = 'var(--accent-translucent)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'var(--text-secondary)';
+                e.currentTarget.style.borderColor = 'var(--border)';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
             >
               <IconGithub />
               <span className="text-sm font-mono tracking-wide">GitHub</span>
             </a>
           )}
-          
+
           {personalInfo.linkedin && (
             <a
               href={personalInfo.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 transition-all duration-200"
-              style={{ color: '#a8a090' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#a8a090'; }}
+              className="group flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all duration-200"
+              style={{
+                color: 'var(--text-secondary)',
+                border: '1px solid var(--border)',
+                background: 'var(--accent-soft)',
+                transition: 'color .3s ease, border-color .3s ease, background-color .3s ease, transform .2s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'var(--accent)';
+                e.currentTarget.style.borderColor = 'var(--accent-translucent)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'var(--text-secondary)';
+                e.currentTarget.style.borderColor = 'var(--border)';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
             >
               <IconLinkedin />
               <span className="text-sm font-mono tracking-wide">LinkedIn</span>
@@ -115,19 +175,31 @@ const Footer: React.FC = () => {
           )}
         </div>
 
-        {/* Divider */}
         <div
           className="h-px w-full max-w-md mx-auto mb-6"
-          style={{ background: 'rgba(200, 169, 110, 0.15)' }}
+          style={{ background: 'var(--border)', transition: 'background-color .3s ease' }}
         />
 
-        {/* Copyright */}
-        <p
-          className="text-xs text-center font-mono tracking-wide"
-          style={{ color: '#5a5650' }}
-        >
-          © {currentYear} {personalInfo.name}.
-        </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+          <p
+            className="text-xs text-center font-mono tracking-wide"
+            style={{ color: 'var(--text-tertiary)', transition: 'color .3s ease' }}
+          >
+            © {currentYear} {personalInfo.name}.
+          </p>
+
+          <button
+            onClick={scrollToTop}
+            aria-label="Back to top"
+            className="flex items-center gap-1.5 text-xs font-mono tracking-wide transition-all duration-200"
+            style={{ color: 'var(--text-tertiary)', transition: 'color .3s ease' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--accent)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-tertiary)'; }}
+          >
+            <IconArrowUp />
+            Back to top
+          </button>
+        </div>
       </div>
     </footer>
   );
