@@ -67,7 +67,7 @@ const Portfolio: React.FC = () => {
       techStack: ['Python', 'POMDP', 'Reinforcement Learning', 'EduCDM', 'Research', 'Journal'],
       logo: 'https://res.cloudinary.com/doafwrddd/image/upload/v1773399059/logos/vqwlkkreofmjidaqtqmj.png',
       previewImage: 'https://res.cloudinary.com/doafwrddd/image/upload/v1773399059/logos/vqwlkkreofmjidaqtqmj.png',
-      link: 'https://drive.google.com/file/d/1nScbKIj28QKG-z_384T8v7ySItwQyloR/view',
+      link: 'https://doi.org/10.33480/jitk.v11i4.7601',
       status: 'research',
       statusText: 'Research',
     },

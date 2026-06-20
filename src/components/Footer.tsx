@@ -132,9 +132,7 @@ const Footer: React.FC = () => {
           className="text-xs text-center font-mono tracking-wide"
           style={{ color: '#5a5650' }}
         >
-          © {currentYear} {personalInfo.name}. Crafted with{' '}
-          <IconHeart />
-          {' '}using React & TypeScript
+          © {currentYear} {personalInfo.name}.
         </p>
       </div>
     </footer>

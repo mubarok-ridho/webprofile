@@ -7,7 +7,7 @@ interface ExperienceItem {
   location: string;
   period: string;
   description: string[];
-  logo: string;
+  logos: string[];
 }
 
 const Experience: React.FC = () => {
@@ -15,7 +15,7 @@ const Experience: React.FC = () => {
     {
       id: 1,
       position: 'Software Developer | Research and Development',
-      company: 'PT Teknologi Nasional Indonesia Siber (TNIS)',
+      company: 'PT Teknologi Nasional Indonesia Siber (XecureIT)',
       location: 'East Jakarta, DKI Jakarta (On-Site)',
       period: 'May 2026 - Present',
       description: [
@@ -23,7 +23,10 @@ const Experience: React.FC = () => {
         'Design, train, and optimize models to solve real-world problems and improve system performance.',
         'Implement AI technologies in security domains, including applications related to Security Operations (SOC) and threat analysis.',
       ],
-      logo: 'https://images.glints.com/unsafe/glints-dashboard.oss-ap-southeast-1.aliyuncs.com/company-logo/c539a165223044e127da7faccc03feff.png',
+      logos: [
+        'https://images.glints.com/unsafe/glints-dashboard.oss-ap-southeast-1.aliyuncs.com/company-logo/c539a165223044e127da7faccc03feff.png',
+        'https://cloudinasia.com/wp-content/uploads/2026/04/XecureIT-red-new.png',
+      ],
     },
     {
       id: 2,
@@ -36,7 +39,7 @@ const Experience: React.FC = () => {
         'Designed and managed PostgreSQL databases for production-ready applications.',
         'Resolving minor bugs, and enhance the selected features.',
       ],
-      logo: 'https://citcom.id/storage/member/logo-only-blue.png',
+      logos: ['https://citcom.id/storage/member/logo-only-blue.png'],
     },
     {
       id: 3,
@@ -49,7 +52,7 @@ const Experience: React.FC = () => {
         'Designed and managed PostgreSQL databases for production-ready applications.',
         'Deployed web applications to hosting environments and published mobile apps to the Google Play Store.',
       ],
-      logo: 'https://res.cloudinary.com/doafwrddd/image/upload/v1766039070/Nutanicsss_tdslfm.png',
+      logos: ['https://res.cloudinary.com/doafwrddd/image/upload/v1766039070/Nutanicsss_tdslfm.png'],
     },
     {
       id: 4,
@@ -61,7 +64,7 @@ const Experience: React.FC = () => {
         'Handling courses in the field of programming, such as web programming, mobile programming, object oriented programming, data structure and algorithm, distributed systems, database systems, machine learning, and computer vision.',
         'Guiding students in course practicum sessions, with a total of 500+ meetings.',
       ],
-      logo: 'https://sistem.lldikti6.id/data/logo/061054.jpg',
+      logos: ['https://sistem.lldikti6.id/data/logo/061054.jpg'],
     },
   ];
 
@@ -122,7 +125,7 @@ const Experience: React.FC = () => {
           />
         </div>
 
-        {/* Experience Cards - PC: 1 kolom, Mobile: 1 kolom dengan spacing rapi */}
+        {/* Experience Cards */}
         <div className="flex flex-col gap-6 md:gap-8 lg:gap-10">
           {experiences.map((exp) => (
             <div
@@ -135,16 +138,20 @@ const Experience: React.FC = () => {
               }}
             >
               <div className="p-5 md:p-7 lg:p-8">
-                {/* Header: Logo + Company Info - Responsive layout */}
+                {/* Header: Logo + Company Info */}
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4 md:gap-6 mb-5 md:mb-6">
-                  {/* Company Logo - Tetap PNG */}
-                  <div className="flex-shrink-0 self-start">
-                    <img
-                      src={exp.logo}
-                      alt={`${exp.company} logo`}
-                      className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain rounded-lg"
-                      style={{ background: 'transparent' }}
-                    />
+                  
+                  {/* Company Logos - Diperbaiki menggunakan map */}
+                  <div className="flex flex-row gap-2 flex-shrink-0 self-start">
+                    {exp.logos.map((logoUrl, logoIdx) => (
+                      <img
+                        key={logoIdx}
+                        src={logoUrl}
+                        alt={`${exp.company} logo ${logoIdx + 1}`}
+                        className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain rounded-lg"
+                        style={{ background: 'transparent' }}
+                      />
+                    ))}
                   </div>
 
                   {/* Position and Company Info */}

@@ -56,7 +56,7 @@ const Skills: React.FC = () => {
     { name: 'Go', category: 'backend', level: 90, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg' },
     { name: 'Python', category: 'backend', level: 90, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
     { name: 'PHP', category: 'backend', level: 65, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg' },
-    { name: 'Java', category: 'backend', level: 78, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
+    { name: 'Java', category: 'backend', level: 80, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
     // Frontend Development
     { name: 'React', category: 'frontend', level: 80, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
     { name: 'Flutter', category: 'frontend', level: 80, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' },
@@ -69,7 +69,7 @@ const Skills: React.FC = () => {
     { name: 'PostgreSQL', category: 'database', level: 92, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
     { name: 'MySQL', category: 'database', level: 90, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
     // Tools & Technologies
-    { name: 'Docker', category: 'tools', level: 78, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+    { name: 'Docker', category: 'tools', level: 85, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
     { name: 'Git', category: 'tools', level: 90, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
   ];
 
@@ -80,7 +80,7 @@ const Skills: React.FC = () => {
   };
 
   const getCategoryName = (category: string) => {
-    switch(category) {
+    switch (category) {
       case 'frontend': return 'Frontend Development';
       case 'backend': return 'Backend & Languages';
       case 'ai': return 'AI & Machine Learning';
@@ -91,7 +91,7 @@ const Skills: React.FC = () => {
   };
 
   const getCategoryIcon = (category: string) => {
-    switch(category) {
+    switch (category) {
       case 'frontend': return <IconFrontend />;
       case 'backend': return <IconBackend />;
       case 'ai': return <IconAI />;
@@ -108,8 +108,11 @@ const Skills: React.FC = () => {
   }, {} as Record<string, typeof skills>);
 
   const getLevelColor = (level: number) => {
-    if (level >= 85) return '#5cb870';
+    if (level >= 85) return '#0cc4c4';
+    if (level >= 80) return '#5cb870';
     if (level >= 70) return '#c8a96e';
+    if (level >= 60) return '#c55025';
+
     return '#50a0c8';
   };
 
@@ -183,14 +186,14 @@ const Skills: React.FC = () => {
                   {getCategoryName(category)}
                 </h3>
               </div>
-              
+
               <div className="p-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   {categorySkills.map((skill, index) => {
                     const frameworkLogo = getFrameworkLogo(skill.name);
                     const logoToUse = frameworkLogo || skill.logo;
                     const levelColor = getLevelColor(skill.level);
-                    
+
                     return (
                       <div key={index} className="space-y-2">
                         <div className="flex items-center justify-between">

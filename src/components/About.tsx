@@ -77,7 +77,7 @@ const highlights = [
   {
     icon: <IconCode />,
     title: 'Backend Engineering',
-    desc: 'Scalable microservices with Go, Python Flask, PostgreSQL, and REST API design.',
+    desc: 'Scalable microservices with Go, Rust, Python Flask, PostgreSQL, and REST API design.',
   },
   {
     icon: <IconMicroscope />,
@@ -217,10 +217,11 @@ const About: React.FC = () => {
               className="text-sm leading-relaxed mb-6"
               style={{ color: '#8a8580', lineHeight: 1.7 }}
             >
-              Informatics graduate with hands-on experience in AI development and backend engineering.
-              Passionate about building Machine Learning, NLP, and Computer Vision systems — from model training
-              to production deployment. Thriving at the intersection of research and engineering with a track record
-              of delivering real-world solutions.
+              Informatics fresh graduate with strong hands-on experience in AI and backend engineering, building
+              Machine Learning, NLP, and Computer Vision. Experienced in designing, building, and deploying scalable
+              systems, as well as training, optimizing, and implementating models for real-world applications. Familiar
+              with the Software Development Life Cycle (SDLC), proven through practical projects and professional
+              work experience.
             </p>
 
             <div className="space-y-3">
@@ -337,7 +338,7 @@ const About: React.FC = () => {
 
             {/* Download CV button - matching hero style */}
             <a
-              href="https://drive.google.com/file/d/1BKbhxjCESVd8iAO8qebod-0dgmkrTX30/view?usp=sharing"
+              href="https://drive.google.com/file/d/1BHDCo8IehibhUsRckI_EkerC1P0PWueV/view?usp=drive_link"
               className="mt-6 w-full flex items-center justify-center gap-2 py-2.5 rounded-md text-xs font-medium transition-all duration-200 hover:opacity-80"
               style={{
                 background: '#a07c34',
