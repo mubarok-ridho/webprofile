@@ -6,18 +6,22 @@ import Education from './components/Education';
 import Experience from './components/Experience';
 import Skills from './components/Skills';
 import Footer from './components/Footer';
+import { ThemeProvider } from './context/ThemeContext';
+
 
 function App() {
   return (
     <div>
-      <Header />
-      <Hero />
-      <About />
-      <Experience />
-      <Portfolio />
-      <Education />      
-      <Skills />
-      <Footer />
+      <ThemeProvider>
+        <Header />
+        <Hero />
+        <About />
+        <Experience />
+        <Portfolio />
+        <Education />
+        <Skills />
+        <Footer />
+      </ThemeProvider>
     </div>
   );
 }

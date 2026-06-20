@@ -24,7 +24,7 @@ const Experience: React.FC = () => {
         'Implement AI technologies in security domains, including applications related to Security Operations (SOC) and threat analysis.',
       ],
       logos: [
-        'https://images.glints.com/unsafe/glints-dashboard.oss-ap-southeast-1.aliyuncs.com/company-logo/c539a165223044e127da7faccc03feff.png',
+        // 'https://images.glints.com/unsafe/glints-dashboard.oss-ap-southeast-1.aliyuncs.com/company-logo/c539a165223044e127da7faccc03feff.png',
         'https://cloudinasia.com/wp-content/uploads/2026/04/XecureIT-red-new.png',
       ],
     },
@@ -72,7 +72,7 @@ const Experience: React.FC = () => {
     <section
       id="experience"
       className="py-16 md:py-20 lg:py-24 relative overflow-hidden"
-      style={{ background: '#0c0b09' }}
+      style={{ background: 'var(--bg)', transition: 'background-color .3s ease' }}
     >
       {/* Subtle grid texture */}
       <div
@@ -81,7 +81,7 @@ const Experience: React.FC = () => {
           inset: 0,
           pointerEvents: 'none',
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
+            'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
           backgroundSize: '60px 60px',
         }}
       />
@@ -95,7 +95,7 @@ const Experience: React.FC = () => {
           width: '500px',
           height: '500px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(200,140,60,0.05) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, var(--accent-glow-bg) 0%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -105,7 +105,7 @@ const Experience: React.FC = () => {
         <div className="text-center mb-10 md:mb-14 lg:mb-16">
           <p
             className="text-xs md:text-sm tracking-[0.2em] uppercase mb-2 md:mb-3"
-            style={{ color: '#8a8580', fontFamily: "'DM Mono', monospace" }}
+            style={{ color: 'var(--text-secondary)', fontFamily: "'DM Mono', monospace", transition: 'color .3s ease' }}
           >
             Professional Journey
           </p>
@@ -113,15 +113,16 @@ const Experience: React.FC = () => {
             className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4"
             style={{
               fontFamily: "'DM Serif Display', serif",
-              color: '#f0ece4',
+              color: 'var(--text-primary)',
               fontWeight: 400,
+              transition: 'color .3s ease',
             }}
           >
             Work Experience
           </h2>
           <div
             className="w-12 h-px mx-auto rounded-full"
-            style={{ background: '#c8a96e' }}
+            style={{ background: 'var(--accent)', transition: 'background-color .3s ease' }}
           />
         </div>
 
@@ -132,16 +133,17 @@ const Experience: React.FC = () => {
               key={exp.id}
               className="group rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl w-full"
               style={{
-                background: 'rgba(20, 18, 16, 0.85)',
-                border: '1px solid rgba(200, 169, 110, 0.15)',
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border-strong)',
                 backdropFilter: 'blur(0px)',
+                transition: 'background-color .3s ease, border-color .3s ease, transform .3s ease',
               }}
             >
               <div className="p-5 md:p-7 lg:p-8">
                 {/* Header: Logo + Company Info */}
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4 md:gap-6 mb-5 md:mb-6">
                   
-                  {/* Company Logos - Diperbaiki menggunakan map */}
+                  {/* Company Logos */}
                   <div className="flex flex-row gap-2 flex-shrink-0 self-start">
                     {exp.logos.map((logoUrl, logoIdx) => (
                       <img
@@ -160,8 +162,9 @@ const Experience: React.FC = () => {
                       className="text-lg md:text-xl lg:text-2xl font-semibold mb-2"
                       style={{
                         fontFamily: "'Outfit', sans-serif",
-                        color: '#f0ece4',
+                        color: 'var(--text-primary)',
                         fontWeight: 500,
+                        transition: 'color .3s ease',
                       }}
                     >
                       {exp.position}
@@ -169,9 +172,10 @@ const Experience: React.FC = () => {
                     <p
                       className="text-sm md:text-base lg:text-lg font-medium mb-1"
                       style={{
-                        color: '#c8a96e',
+                        color: 'var(--accent)',
                         fontFamily: "'DM Mono', monospace",
                         letterSpacing: '0.02em',
+                        transition: 'color .3s ease',
                       }}
                     >
                       {exp.company}
@@ -180,8 +184,9 @@ const Experience: React.FC = () => {
                       <p
                         className="text-xs md:text-sm mb-2"
                         style={{
-                          color: '#6a6560',
+                          color: 'var(--text-tertiary)',
                           fontFamily: "'DM Mono', monospace",
+                          transition: 'color .3s ease',
                         }}
                       >
                         {exp.location}
@@ -193,9 +198,10 @@ const Experience: React.FC = () => {
                       <span
                         className="inline-block px-3 py-1.5 rounded-md text-[10px] md:text-xs lg:text-sm font-mono tracking-wider"
                         style={{
-                          background: 'rgba(200, 169, 110, 0.12)',
-                          color: '#c8c0b4',
-                          border: '1px solid rgba(200, 169, 110, 0.25)',
+                          background: 'var(--accent-soft)',
+                          color: 'var(--text-primary)',
+                          border: '1px solid var(--border-strong)',
+                          transition: 'background-color .3s ease, color .3s ease, border-color .3s ease',
                         }}
                       >
                         {exp.period}
@@ -211,11 +217,11 @@ const Experience: React.FC = () => {
                       <li
                         key={idx}
                         className="text-xs md:text-sm lg:text-base leading-relaxed flex items-start gap-3"
-                        style={{ color: '#a8a090', lineHeight: 1.6 }}
+                        style={{ color: 'var(--text-secondary)', lineHeight: 1.6, transition: 'color .3s ease' }}
                       >
                         <span
                           className="inline-block w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
-                          style={{ background: '#c8a96e' }}
+                          style={{ background: 'var(--accent)', transition: 'background-color .3s ease' }}
                         />
                         <span className="flex-1">{item}</span>
                       </li>

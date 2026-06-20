@@ -84,7 +84,6 @@ const highlights = [
     title: 'Research & Development',
     desc: 'Published research in adaptive learning systems, IoT, and deep learning applications.',
   },
-
 ];
 
 const contactItems = [
@@ -131,7 +130,7 @@ const About: React.FC = () => {
     <section
       id="about"
       className="py-20 relative overflow-hidden"
-      style={{ background: '#0c0b09' }}
+      style={{ background: 'var(--bg)', transition: 'background-color .3s ease' }}
     >
       {/* Subtle grid texture - matching hero */}
       <div
@@ -139,7 +138,7 @@ const About: React.FC = () => {
           position: 'absolute',
           inset: 0,
           pointerEvents: 'none',
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(var(--grid-line) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
         }}
       />
@@ -147,7 +146,7 @@ const About: React.FC = () => {
       {/* Warm accent line at top */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-md h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, #c8a96e, transparent)' }}
+        style={{ background: 'linear-gradient(90deg, transparent, var(--accent), transparent)' }}
       />
 
       <div className="container mx-auto px-6 max-w-5xl relative z-10">
@@ -156,7 +155,7 @@ const About: React.FC = () => {
         <div className="text-center mb-14">
           <p
             className="text-sm tracking-widest uppercase mb-3"
-            style={{ color: '#8a8580', fontFamily: "'Poppins', monospace" }}
+            style={{ color: 'var(--text-secondary)', fontFamily: "'Poppins', monospace", transition: 'color .3s ease' }}
           >
             Get to know me
           </p>
@@ -164,15 +163,16 @@ const About: React.FC = () => {
             className="text-3xl md:text-4xl font-bold mb-4"
             style={{
               fontFamily: "'Montserrat', Bold",
-              color: '#f0ece4',
+              color: 'var(--text-primary)',
               fontWeight: 600,
+              transition: 'color .3s ease',
             }}
           >
             About Me
           </h2>
           <div
             className="w-12 h-px mx-auto rounded-full"
-            style={{ background: '#c8a96e' }}
+            style={{ background: 'var(--accent)', transition: 'background-color .3s ease' }}
           />
         </div>
 
@@ -183,15 +183,17 @@ const About: React.FC = () => {
               key={s.label}
               className="rounded-lg p-5 text-center"
               style={{
-                background: 'rgba(200,169,110,0.04)',
-                border: '1px solid rgba(200,169,110,0.1)',
+                background: 'var(--accent-soft)',
+                border: '1px solid var(--border)',
+                transition: 'background-color .3s ease, border-color .3s ease',
               }}
             >
               <p
                 className="text-2xl font-bold mb-1"
                 style={{
                   fontFamily: "'DM Serif Display', serif",
-                  color: '#c8a96e',
+                  color: 'var(--accent)',
+                  transition: 'color .3s ease',
                 }}
               >
                 {s.value}
@@ -200,7 +202,8 @@ const About: React.FC = () => {
                 className="text-xs tracking-wide"
                 style={{
                   fontFamily: "'DM Mono', monospace",
-                  color: '#6a6560',
+                  color: 'var(--text-tertiary)',
+                  transition: 'color .3s ease',
                 }}
               >
                 {s.label}
@@ -215,11 +218,11 @@ const About: React.FC = () => {
           <div>
             <p
               className="text-sm leading-relaxed mb-6"
-              style={{ color: '#8a8580', lineHeight: 1.7 }}
+              style={{ color: 'var(--text-secondary)', lineHeight: 1.7, transition: 'color .3s ease' }}
             >
               Informatics fresh graduate with strong hands-on experience in AI and backend engineering, building
               Machine Learning, NLP, and Computer Vision. Experienced in designing, building, and deploying scalable
-              systems, as well as training, optimizing, and implementating models for real-world applications. Familiar
+              systems, as well as training, optimizing, and implementing models for real-world applications. Familiar
               with the Software Development Life Cycle (SDLC), proven through practical projects and professional
               work experience.
             </p>
@@ -230,14 +233,15 @@ const About: React.FC = () => {
                   key={h.title}
                   className="p-4 rounded-lg"
                   style={{
-                    background: 'rgba(200,169,110,0.03)',
-                    border: '1px solid rgba(200,169,110,0.08)',
+                    background: 'var(--accent-soft)',
+                    border: '1px solid var(--border)',
+                    transition: 'background-color .3s ease, border-color .3s ease',
                   }}
                 >
                   <div className="flex items-start gap-3">
                     <span
                       className="mt-0.5 flex-shrink-0"
-                      style={{ color: '#c8a96e' }}
+                      style={{ color: 'var(--accent)', transition: 'color .3s ease' }}
                     >
                       {h.icon}
                     </span>
@@ -246,15 +250,16 @@ const About: React.FC = () => {
                         className="font-medium text-sm mb-1"
                         style={{
                           fontFamily: "'Poppins', monospace",
-                          color: '#d4cfc6',
+                          color: 'var(--text-primary)',
                           letterSpacing: '0.06em',
+                          transition: 'color .3s ease',
                         }}
                       >
                         {h.title}
                       </h3>
                       <p
                         className="text-xs leading-relaxed"
-                        style={{ color: '#6a6560' }}
+                        style={{ color: 'var(--text-tertiary)', transition: 'color .3s ease' }}
                       >
                         {h.desc}
                       </p>
@@ -265,25 +270,27 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          {/* Right — contact info (education removed) */}
+          {/* Right — contact info */}
           <div
             className="rounded-lg p-6"
             style={{
-              background: 'rgba(20,18,16,0.8)',
-              border: '1px solid rgba(200,169,110,0.12)',
+              background: 'var(--bg-elevated)',
+              border: '1px solid var(--border)',
+              transition: 'background-color .3s ease, border-color .3s ease',
             }}
           >
             <h3
               className="font-medium text-sm mb-5 flex items-center gap-2"
               style={{
                 fontFamily: "'Montserrat', monospace",
-                color: '#d4cfc6',
+                color: 'var(--text-primary)',
                 letterSpacing: '0.08em',
+                transition: 'color .3s ease',
               }}
             >
               <span
                 className="w-5 h-px rounded-full"
-                style={{ background: '#c8a96e' }}
+                style={{ background: 'var(--accent)', transition: 'background-color .3s ease' }}
               />
               CONTACT & LINKS
             </h3>
@@ -293,11 +300,11 @@ const About: React.FC = () => {
                 <div
                   key={item.label}
                   className="flex items-center gap-3 py-2.5 border-b last:border-b-0"
-                  style={{ borderColor: 'rgba(200,169,110,0.06)' }}
+                  style={{ borderColor: 'var(--border)', transition: 'border-color .3s ease' }}
                 >
                   <span
                     className="flex-shrink-0"
-                    style={{ color: '#8a8580' }}
+                    style={{ color: 'var(--text-secondary)', transition: 'color .3s ease' }}
                   >
                     {item.icon}
                   </span>
@@ -306,7 +313,8 @@ const About: React.FC = () => {
                       className="text-[10px] mb-0.5 tracking-wide"
                       style={{
                         fontFamily: "'Montserrat', monospace",
-                        color: '#5a5650',
+                        color: 'var(--text-tertiary)',
+                        transition: 'color .3s ease',
                       }}
                     >
                       {item.label}
@@ -317,16 +325,16 @@ const About: React.FC = () => {
                         target={item.href.startsWith('http') ? '_blank' : undefined}
                         rel="noreferrer"
                         className="text-xs transition-colors truncate block"
-                        style={{ color: '#a8a090' }}
-                        onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e'; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.color = '#a8a090'; }}
+                        style={{ color: 'var(--text-secondary)' }}
+                        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--accent)'; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; }}
                       >
                         {item.value}
                       </a>
                     ) : (
                       <p
                         className="text-xs truncate"
-                        style={{ color: '#a8a090' }}
+                        style={{ color: 'var(--text-secondary)', transition: 'color .3s ease' }}
                       >
                         {item.value}
                       </p>
@@ -341,17 +349,13 @@ const About: React.FC = () => {
               href="https://drive.google.com/file/d/1BHDCo8IehibhUsRckI_EkerC1P0PWueV/view?usp=drive_link"
               className="mt-6 w-full flex items-center justify-center gap-2 py-2.5 rounded-md text-xs font-medium transition-all duration-200 hover:opacity-80"
               style={{
-                background: '#a07c34',
-                color: '#23240c',
+                background: 'var(--cta-primary-bg)',
+                color: 'var(--cta-primary-text)',
                 fontFamily: "'Montserrat', monospace",
                 letterSpacing: '0.08em',
+                transition: 'background-color .3s ease, color .3s ease',
               }}
             >
-              {/* <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-3.5 h-3.5">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg> */}
               View My Curriculum Vitae
             </a>
           </div>

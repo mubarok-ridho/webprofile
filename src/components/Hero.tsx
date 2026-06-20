@@ -1,5 +1,6 @@
 import React from 'react';
 import { personalInfo } from '../data/profileData';
+import ThemeToggle from './ThemeToggle';
 
 const PHOTO_URL =
   'https://res.cloudinary.com/doafwrddd/image/upload/v1777464247/wmremove-transformed_4_qkvhin.jpg';
@@ -9,7 +10,12 @@ const STYLES = `
 
   @keyframes fadeUp   { from { opacity:0; transform:translateY(28px) } to { opacity:1; transform:translateY(0) } }
   @keyframes fadeIn   { from { opacity:0 } to { opacity:1 } }
-  @keyframes pulseGlow { 0%,100% { box-shadow:0 0 6px rgba(92,184,112,.4) } 50% { box-shadow:0 0 12px rgba(92,184,112,.85) } }
+  @keyframes pulseGlow { 0%,100% { box-shadow:0 0 6px var(--status-glow) } 50% { box-shadow:0 0 12px var(--status-glow) } }
+
+  .hero-section {
+    background: var(--bg);
+    transition: background-color .4s ease;
+  }
 
   /* ── entry animations ── */
   .hero-tag   { animation: fadeUp .6s ease both }
@@ -23,56 +29,68 @@ const STYLES = `
   .cta-primary {
     display: inline-flex; align-items: center; justify-content: center;
     gap: 8px; padding: 12px 28px;
-    background: #e8e0d0; color: #0a0a0a;
+    background: var(--cta-primary-bg); color: var(--cta-primary-text);
     font-family: 'DM Mono', monospace; font-size: 12px;
     letter-spacing: .08em; text-decoration: none;
-    transition: background .2s, transform .15s;
+    transition: filter .2s, transform .15s, background-color .3s, color .3s;
   }
-  .cta-primary:hover { background: #f0e8d6; transform: translateY(-1px) }
+  .cta-primary:hover { filter: brightness(1.1); transform: translateY(-1px) }
+  .cta-primary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px }
 
   .cta-outline {
     display: inline-flex; align-items: center; justify-content: center;
     gap: 8px; padding: 12px 28px;
-    border: 1px solid rgba(255,255,255,.18); color: #a8a090;
+    border: 1px solid var(--border-strong); color: var(--text-secondary);
     font-family: 'DM Mono', monospace; font-size: 12px;
     letter-spacing: .08em; text-decoration: none;
     transition: border-color .2s, color .2s, transform .15s;
   }
-  .cta-outline:hover { border-color: rgba(255,255,255,.4); color: #d4cfc6; transform: translateY(-1px) }
+  .cta-outline:hover { border-color: var(--accent); color: var(--text-primary); transform: translateY(-1px) }
+  .cta-outline:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px }
 
   /* ── stat block ── */
   .stat-num {
     font-family: 'DM Serif Display', serif;
-    font-size: 28px; color: #f0ece4; line-height: 1;
+    font-size: 28px; color: var(--text-primary); line-height: 1;
+    transition: color .3s ease;
   }
   .stat-label {
     font-family: 'DM Mono', monospace; font-size: 10px;
-    letter-spacing: .15em; color: #5a5650;
+    letter-spacing: .15em; color: var(--text-tertiary);
     text-transform: uppercase; margin-top: 4px;
+    transition: color .3s ease;
   }
   .stat-divider {
-    width: 1px; background: rgba(255,255,255,.08);
+    width: 1px; background: var(--border);
     height: 40px; align-self: center; flex-shrink: 0;
+    transition: background-color .3s ease;
   }
 
   /* ── role chips ── */
   .role-chip {
     display: inline-flex; align-items: center; gap: 6px;
-    border: 1px solid rgba(255,255,255,.1); padding: 5px 12px;
+    border: 1px solid var(--border); padding: 5px 12px;
     font-family: 'DM Mono', monospace; font-size: 11px;
-    letter-spacing: .1em; color: #6a6460;
+    letter-spacing: .1em; color: var(--text-secondary);
+    transition: border-color .3s ease, color .3s ease;
   }
   .role-chip-dot {
     width: 5px; height: 5px; border-radius: 50%;
-    background: #c8a96e; flex-shrink: 0;
+    flex-shrink: 0;
+  }
+
+  /* ── desktop toggle slot ── */
+  .desktop-toggle-slot {
+    position: absolute; top: 32px; right: 48px; z-index: 20;
   }
 
   /* ── scroll indicator ── */
   .scroll-line {
     width: 1px; height: 56px;
-    background: linear-gradient(to bottom, transparent, #4a4540, transparent);
+    background: linear-gradient(to bottom, transparent, var(--border-strong), transparent);
     animation: fadeIn 1s ease 1.2s both;
   }
+  .scroll-label { color: var(--text-tertiary); transition: color .3s ease; }
 
   /* ── photo hover (desktop) ── */
   .img-wrap:hover img { filter: grayscale(0%) brightness(1.04); transform: scale(1.02) }
@@ -81,7 +99,8 @@ const STYLES = `
   /* ── corner brackets (desktop) ── */
   .grid-corner {
     position: absolute; width: 16px; height: 16px;
-    border-color: rgba(200,169,110,.4); border-style: solid;
+    border-color: var(--accent-translucent); border-style: solid;
+    transition: border-color .3s ease;
   }
 
   /* Mobile elements hidden by default */
@@ -95,13 +114,14 @@ const STYLES = `
     .stat-num         { font-size: 24px !important }
     .stat-label       { font-size: 9px !important }
     .stat-divider     { height: 32px !important }
+    .desktop-toggle-slot { top: 24px !important; right: 32px !important }
   }
 
   /* ════════════════════════════════════════════════════════════
      MOBILE ≤ 768px  —  FOTO FULL-HEIGHT BACKGROUND
      Foto mengisi seluruh layar sebagai background,
-     fade dari transparan ke hitam mulai dari tengah ke bawah,
-     konten (chips+status di atas, nama+teks+stats+cta di bawah)
+     fade dari transparan ke warna bg tema mulai dari tengah ke bawah,
+     konten (chips+toggle+status di atas, nama+teks+stats+cta di bawah)
      melayang di atas foto.
   ════════════════════════════════════════════════════════════ */
   @media (max-width: 768px) {
@@ -109,6 +129,7 @@ const STYLES = `
     /* Sembunyikan semua desktop layout */
     .hero-main-layout    { display: none !important }
     .scroll-indicator    { display: none !important }
+    .desktop-toggle-slot { display: none !important }
 
     /* Tampilkan section mobile */
     .hero-mobile-section {
@@ -130,7 +151,7 @@ const STYLES = `
       height: 100% !important;
       object-fit: contain !important;
       object-position: center 20% !important;
-      filter: grayscale(25%) brightness(.72) contrast(1.1) !important;
+      filter: var(--photo-filter) !important;
       display: block !important;
     }
 
@@ -141,11 +162,11 @@ const STYLES = `
       pointer-events: none !important;
       background: repeating-linear-gradient(
         0deg, transparent, transparent 2px,
-        rgba(0,0,0,.055) 2px, rgba(0,0,0,.055) 4px
+        rgba(0,0,0,.06) 2px, rgba(0,0,0,.06) 4px
       ) !important;
     }
 
-    /* Gradient fade: atas jernih → bawah hitam penuh */
+    /* Gradient fade: atas jernih → bawah penuh warna bg tema */
     .m-fade {
       position: absolute !important;
       inset: 0 !important; z-index: 3 !important;
@@ -154,10 +175,11 @@ const STYLES = `
         to bottom,
         transparent 0%,
         transparent 32%,
-        rgba(12,11,9,.5)  50%,
-        rgba(12,11,9,.88) 63%,
-        #0c0b09           76%
+        rgba(var(--fade-rgb), .55)  50%,
+        rgba(var(--fade-rgb), .9)   63%,
+        rgb(var(--fade-rgb))        76%
       ) !important;
+      transition: background-color .3s ease !important;
     }
 
     /* Grid texture */
@@ -166,8 +188,8 @@ const STYLES = `
       inset: 0 !important; z-index: 4 !important;
       pointer-events: none !important;
       background-image:
-        linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px) !important;
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) !important;
       background-size: 40px 40px !important;
     }
 
@@ -177,8 +199,9 @@ const STYLES = `
       left: 0 !important; top: 0 !important; height: 58% !important;
       width: 3px !important; z-index: 5 !important;
       background: linear-gradient(
-        to bottom, transparent 8%, #c8a96e 45%, #c8a96e 55%, transparent 92%
+        to bottom, transparent 8%, var(--accent) 45%, var(--accent) 55%, transparent 92%
       ) !important;
+      transition: background .3s ease !important;
     }
 
     /* Konten melayang di atas */
@@ -191,7 +214,7 @@ const STYLES = `
       padding-bottom: 36px !important;
     }
 
-    /* ── Atas: chips + status ── */
+    /* ── Atas: chips + toggle + status ── */
     .m-top {
       padding: 36px 22px 0 !important;
       display: flex !important;
@@ -204,11 +227,12 @@ const STYLES = `
     }
     .m-chip {
       display: inline-flex !important; align-items: center !important; gap: 5px !important;
-      border: 1px solid rgba(255,255,255,.14) !important;
+      border: 1px solid var(--border-strong) !important;
       padding: 4px 10px !important;
       font-family: 'DM Mono', monospace !important;
-      font-size: 10px !important; letter-spacing: .1em !important; color: #7a7268 !important;
-      background: rgba(12,11,9,.25) !important;
+      font-size: 10px !important; letter-spacing: .1em !important; color: var(--text-secondary) !important;
+      background: rgba(var(--fade-rgb), .35) !important;
+      transition: border-color .3s ease, color .3s ease, background-color .3s ease !important;
     }
     .m-chip-dot { width: 4px !important; height: 4px !important; border-radius: 50% !important; flex-shrink: 0 !important; }
 
@@ -217,12 +241,12 @@ const STYLES = `
     }
     .m-sdot {
       width: 6px !important; height: 6px !important; border-radius: 50% !important;
-      background: #5cb870 !important; flex-shrink: 0 !important; display: block !important;
+      background: var(--status) !important; flex-shrink: 0 !important; display: block !important;
       animation: pulseGlow 2s ease-in-out infinite !important;
     }
     .m-status p { margin: 0 !important; font-family: 'DM Mono', monospace !important; letter-spacing: .05em !important; line-height: 1.4 !important; }
-    .m-s-avail  { font-size: 9.5px !important; color: #b0a898 !important }
-    .m-s-open   { font-size: 8px !important;   color: #5a5650 !important }
+    .m-s-avail  { font-size: 9.5px !important; color: var(--text-secondary) !important; transition: color .3s ease !important; }
+    .m-s-open   { font-size: 8px !important;   color: var(--text-tertiary) !important; transition: color .3s ease !important; }
 
     /* Spacer dorong konten bawah ke bottom */
     .m-spacer { flex: 1 !important; min-height: 80px !important }
@@ -236,9 +260,10 @@ const STYLES = `
       font-family: 'DM Serif Display', serif !important;
       font-size: clamp(48px, 13vw, 72px) !important;
       line-height: .9 !important; margin: 0 !important;
-      color: #f4f0e8 !important; font-weight: 400 !important;
+      color: var(--text-primary) !important; font-weight: 400 !important;
+      transition: color .3s ease !important;
     }
-    .m-name h1 span { color: #c8a96e !important; display: block !important }
+    .m-name h1 span { color: var(--accent) !important; display: block !important; transition: color .3s ease !important; }
 
     .m-tagline {
       padding: 0 22px !important;
@@ -247,7 +272,8 @@ const STYLES = `
     .m-tagline p {
       font-family: 'Outfit', sans-serif !important;
       font-size: 13px !important; line-height: 1.75 !important;
-      color: #5a5650 !important; margin: 0 0 0 !important; font-weight: 300 !important;
+      color: var(--text-secondary) !important; margin: 0 0 0 !important; font-weight: 300 !important;
+      transition: color .3s ease !important;
     }
 
     /* Stats: scroll horizontal */
@@ -256,28 +282,32 @@ const STYLES = `
       overflow-x: auto !important; -webkit-overflow-scrolling: touch !important;
       scrollbar-width: none !important; gap: 0 !important;
       padding: 16px 22px !important;
-      border-top: 1px solid rgba(255,255,255,.07) !important;
-      border-bottom: 1px solid rgba(255,255,255,.07) !important;
+      border-top: 1px solid var(--border) !important;
+      border-bottom: 1px solid var(--border) !important;
       margin: 20px 0 22px !important;
       animation: fadeUp .6s ease .28s both !important;
+      transition: border-color .3s ease !important;
     }
     .m-stats::-webkit-scrollbar { display: none !important }
     .m-stat { flex: 0 0 auto !important; padding-right: 18px !important }
     .m-stat-n {
       font-family: 'DM Serif Display', serif !important;
-      font-size: 22px !important; color: #f0ece4 !important; line-height: 1 !important;
+      font-size: 22px !important; color: var(--text-primary) !important; line-height: 1 !important;
+      transition: color .3s ease !important;
     }
-    .m-stat-n span { font-size: 15px !important; color: #c8a96e !important }
+    .m-stat-n span { font-size: 15px !important; color: var(--accent) !important; transition: color .3s ease !important; }
     .m-stat-l {
       font-family: 'DM Mono', monospace !important;
       font-size: 7.5px !important; letter-spacing: .1em !important;
-      color: #3e3c38 !important; text-transform: uppercase !important;
+      color: var(--text-tertiary) !important; text-transform: uppercase !important;
       margin-top: 3px !important; white-space: nowrap !important;
+      transition: color .3s ease !important;
     }
     .m-sdiv {
-      width: 1px !important; background: rgba(255,255,255,.08) !important;
+      width: 1px !important; background: var(--border) !important;
       height: 28px !important; flex-shrink: 0 !important;
       margin: 0 18px !important; align-self: center !important;
+      transition: background-color .3s ease !important;
     }
 
     /* CTA */
@@ -289,17 +319,31 @@ const STYLES = `
       flex: 1 !important; display: inline-flex !important;
       align-items: center !important; justify-content: center !important;
       gap: 6px !important; padding: 13px 14px !important;
-      background: #e8e0d0 !important; color: #0a0a0a !important;
+      background: var(--cta-primary-bg) !important; color: var(--cta-primary-text) !important;
       font-family: 'DM Mono', monospace !important; font-size: 11px !important;
       letter-spacing: .07em !important; text-decoration: none !important;
+      transition: background-color .3s ease, color .3s ease !important;
     }
     .m-btn-o {
       flex: 1 !important; display: inline-flex !important;
       align-items: center !important; justify-content: center !important;
       padding: 13px 14px !important;
-      border: 1px solid rgba(255,255,255,.15) !important; color: #7a7268 !important;
+      border: 1px solid var(--border-strong) !important; color: var(--text-secondary) !important;
       font-family: 'DM Mono', monospace !important; font-size: 11px !important;
       letter-spacing: .07em !important; text-decoration: none !important;
+      transition: border-color .3s ease, color .3s ease !important;
+    }
+
+    /* Toggle floats independently in the top-right corner so it never
+       fights with the chip row for space (this was the messy part) */
+    .mobile-toggle-slot {
+      position: absolute !important;
+      top: 20px !important;
+      right: 18px !important;
+      z-index: 20 !important;
+    }
+    .mobile-toggle-slot .theme-toggle-switch {
+      background: rgba(var(--fade-rgb), .5) !important;
     }
   }
 
@@ -313,6 +357,13 @@ const STYLES = `
     .m-stat-l    { font-size: 7px !important }
     .m-btn-p, .m-btn-o { padding: 11px 12px !important; font-size: 10.5px !important }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-tag, .hero-name, .hero-sub, .hero-stats, .hero-cta, .hero-img,
+    .m-top, .m-name, .m-tagline, .m-stats, .m-cta, .scroll-line, .m-sdot {
+      animation: none !important;
+    }
+  }
 `;
 
 const Hero: React.FC = () => {
@@ -325,9 +376,9 @@ const Hero: React.FC = () => {
       <style>{STYLES}</style>
 
       <section
+        className="hero-section"
         style={{
           minHeight: '100vh',
-          background: '#0c0b09',
           display: 'flex',
           alignItems: 'center',
           position: 'relative',
@@ -343,27 +394,32 @@ const Hero: React.FC = () => {
         {/* ── grid texture ── */}
         <div style={{ position:'absolute', inset:0, pointerEvents:'none',
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),' +
-            'linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px)',
+            'linear-gradient(var(--grid-line) 1px, transparent 1px),' +
+            'linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
           backgroundSize: '60px 60px' }}
         />
 
-        {/* ── warm radial glow ── */}
+        {/* ── ambient glow (warm at night, cool by day) ── */}
         <div style={{ position:'absolute', left:'-10%', top:'50%', transform:'translateY(-50%)',
           width:'600px', height:'600px', borderRadius:'50%',
-          background:'radial-gradient(circle, rgba(200,140,60,.07) 0%, transparent 70%)',
+          background:'radial-gradient(circle, var(--accent-glow-bg) 0%, transparent 70%)',
           pointerEvents:'none' }}
         />
 
         {/* ── decorative circle rings ── */}
         <div style={{ position:'absolute', right:'-80px', top:'50%', transform:'translateY(-50%)',
           width:'420px', height:'420px', borderRadius:'50%',
-          border:'1px solid rgba(255,255,255,.04)', pointerEvents:'none' }}
+          border:'1px solid var(--border)', pointerEvents:'none' }}
         />
         <div style={{ position:'absolute', right:'20px', top:'50%', transform:'translateY(-50%)',
           width:'280px', height:'280px', borderRadius:'50%',
-          border:'1px solid rgba(255,255,255,.05)', pointerEvents:'none' }}
+          border:'1px solid var(--border)', pointerEvents:'none' }}
         />
+
+        {/* ── day/night toggle (desktop) ── */}
+        <div className="desktop-toggle-slot">
+          <ThemeToggle />
+        </div>
 
         {/* ══ DESKTOP MAIN LAYOUT ══ */}
         <div
@@ -380,11 +436,11 @@ const Hero: React.FC = () => {
             <div className="hero-tag"
               style={{ display:'flex', gap:'8px', marginBottom:'36px', flexWrap:'wrap' }}>
               <span className="role-chip">
-                <span className="role-chip-dot" />
+                <span className="role-chip-dot" style={{ background:'var(--chip-gold)' }} />
                 AI Engineer
               </span>
               <span className="role-chip">
-                <span className="role-chip-dot" style={{ background:'#7090c8' }} />
+                <span className="role-chip-dot" style={{ background:'var(--accent-secondary)' }} />
                 Backend Developer
               </span>
             </div>
@@ -393,17 +449,19 @@ const Hero: React.FC = () => {
               <h1 style={{
                 fontFamily:"'DM Serif Display', serif",
                 fontSize:'clamp(52px, 7vw, 88px)', lineHeight:.95,
-                margin:0, color:'#f4f0e8', fontWeight:400,
+                margin:0, color:'var(--text-primary)', fontWeight:400,
+                transition:'color .3s ease',
               }}>
                 {firstName}<br />
-                <span style={{ color:'#c8a96e' }}>{lastName}</span>
+                <span style={{ color:'var(--accent)', transition:'color .3s ease' }}>{lastName}</span>
               </h1>
             </div>
 
             <div className="hero-sub">
               <p style={{
-                fontSize:'15px', lineHeight:1.8, color:'#6a6460',
+                fontSize:'15px', lineHeight:1.8, color:'var(--text-secondary)',
                 maxWidth:'420px', margin:'0 0 40px', fontWeight:300,
+                transition:'color .3s ease',
               }}>
                 Building AI-powered systems and scalable backend solutions —
                 from model development to production deployment. Precision at every layer.
@@ -413,11 +471,12 @@ const Hero: React.FC = () => {
             <div className="hero-stats" style={{
               display:'flex', alignItems:'center', gap:'28px',
               marginBottom:'44px', padding:'24px 0',
-              borderTop:'1px solid rgba(255,255,255,.06)',
-              borderBottom:'1px solid rgba(255,255,255,.06)',
+              borderTop:'1px solid var(--border)',
+              borderBottom:'1px solid var(--border)',
+              transition:'border-color .3s ease',
             }}>
               <div>
-                <p className="stat-num">10<span style={{ fontSize:'18px', color:'#c8a96e' }}>+</span></p>
+                <p className="stat-num">10<span style={{ fontSize:'18px', color:'var(--accent)' }}>+</span></p>
                 <p className="stat-label">Projects</p>
               </div>
               <div className="stat-divider" />
@@ -441,7 +500,7 @@ const Hero: React.FC = () => {
               <a href="#portfolio" className="cta-primary">
                 View Work
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M7 2l5 5-5 5" stroke="#0a0a0a" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M2 7h10M7 2l5 5-5 5" stroke="var(--cta-primary-text)" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </a>
               <a href="#about" className="cta-outline">Get in Touch</a>
@@ -452,14 +511,14 @@ const Hero: React.FC = () => {
           {/* RIGHT COLUMN — foto desktop */}
           <div className="hero-img" style={{ flex:'0 0 auto', position:'relative', alignSelf:'center' }}>
             <div style={{ position:'absolute', inset:'-20px',
-              border:'1px solid rgba(200,169,110,.12)', borderRadius:'2px' }} />
+              border:'1px solid var(--accent-translucent)', borderRadius:'2px', transition:'border-color .3s ease' }} />
             <div className="grid-corner" style={{ top:-4, left:-4,   borderWidth:'1px 0 0 1px' }} />
             <div className="grid-corner" style={{ top:-4, right:-4,  borderWidth:'1px 1px 0 0' }} />
             <div className="grid-corner" style={{ bottom:-4, left:-4,  borderWidth:'0 0 1px 1px' }} />
             <div className="grid-corner" style={{ bottom:-4, right:-4, borderWidth:'0 1px 1px 0' }} />
             <div className="img-wrap" style={{
               width:'300px', height:'380px', position:'relative',
-              overflow:'hidden', background:'#1a1814',
+              overflow:'hidden', background:'var(--bg-sunken)',
             }}>
               <div style={{
                 position:'absolute', inset:0, zIndex:2, pointerEvents:'none',
@@ -467,24 +526,25 @@ const Hero: React.FC = () => {
               }} />
               <img src={PHOTO_URL} alt={personalInfo.name} style={{
                 width:'100%', height:'100%', objectFit:'cover',
-                filter:'grayscale(30%) brightness(.9) contrast(1.05)', display:'block',
+                filter:'var(--photo-filter)', display:'block',
               }} />
             </div>
             <div style={{
               position:'absolute', bottom:'-16px', left:'-16px',
-              background:'#141210', border:'1px solid rgba(255,255,255,.1)',
+              background:'var(--bg-elevated)', border:'1px solid var(--border)',
               padding:'10px 16px', display:'flex', alignItems:'center', gap:'10px',
+              transition:'background-color .3s ease, border-color .3s ease',
             }}>
               <span style={{ width:'7px', height:'7px', borderRadius:'50%',
-                background:'#5cb870', boxShadow:'0 0 8px rgba(92,184,112,.6)',
-                flexShrink:0, display:'block' }} />
+                background:'var(--status)', boxShadow:'0 0 8px var(--status-glow)',
+                flexShrink:0, display:'block', transition:'background-color .3s ease' }} />
               <div>
                 <p style={{ fontFamily:"'DM Mono', monospace", fontSize:'11px',
-                  color:'#c8c0b4', margin:0, letterSpacing:'.06em' }}>
+                  color:'var(--text-primary)', margin:0, letterSpacing:'.06em', transition:'color .3s ease' }}>
                   Available for work
                 </p>
                 <p style={{ fontFamily:"'DM Mono', monospace", fontSize:'10px',
-                  color:'#4a4640', margin:0, letterSpacing:'.04em' }}>
+                  color:'var(--text-tertiary)', margin:0, letterSpacing:'.04em', transition:'color .3s ease' }}>
                   Open to roles &amp; freelance
                 </p>
               </div>
@@ -498,8 +558,8 @@ const Hero: React.FC = () => {
           position:'absolute', bottom:'32px', left:'50%', transform:'translateX(-50%)',
           display:'flex', flexDirection:'column', alignItems:'center', gap:'8px',
         }}>
-          <span style={{ fontFamily:"'DM Mono', monospace", fontSize:'9px',
-            letterSpacing:'.2em', color:'#2e2c28', textTransform:'uppercase' }}>
+          <span className="scroll-label" style={{ fontFamily:"'DM Mono', monospace", fontSize:'9px',
+            letterSpacing:'.2em', textTransform:'uppercase' }}>
             Scroll
           </span>
           <div className="scroll-line" />
@@ -508,7 +568,7 @@ const Hero: React.FC = () => {
         {/* ══════════════════════════════════
             MOBILE LAYOUT (≤ 768px)
             Foto full-height background,
-            fade ke hitam di area nama.
+            fade ke warna bg tema di area nama.
         ══════════════════════════════════ */}
         <div className="hero-mobile-section">
 
@@ -521,6 +581,11 @@ const Hero: React.FC = () => {
           <div className="m-grid" />
           <div className="m-accent-left" />
 
+          {/* Day/night toggle — fixed corner, independent of the chip row */}
+          <div className="mobile-toggle-slot">
+            <ThemeToggle />
+          </div>
+
           {/* Konten di atas foto */}
           <div className="m-content">
 
@@ -528,11 +593,11 @@ const Hero: React.FC = () => {
             <div className="m-top">
               <div className="m-chips">
                 <span className="m-chip">
-                  <span className="m-chip-dot" style={{ background:'#c8a96e' }} />
+                  <span className="m-chip-dot" style={{ background:'var(--chip-gold)' }} />
                   AI Engineer
                 </span>
                 <span className="m-chip">
-                  <span className="m-chip-dot" style={{ background:'#7090c8' }} />
+                  <span className="m-chip-dot" style={{ background:'var(--accent-secondary)' }} />
                   Backend Developer
                 </span>
               </div>
@@ -592,7 +657,7 @@ const Hero: React.FC = () => {
               <a href="#portfolio" className="m-btn-p">
                 View Work
                 <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M7 2l5 5-5 5" stroke="#0a0a0a" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M2 7h10M7 2l5 5-5 5" stroke="var(--cta-primary-text)" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </a>
               <a href="#about" className="m-btn-o">Get in Touch</a>

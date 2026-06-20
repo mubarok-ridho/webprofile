@@ -1,0 +1,83 @@
+/*
+  Design concept: "color temperature".
+  Day = cool daylight accent (teal-cyan). Night = warm tungsten accent (gold).
+  Everything else (type, structure, layout language) stays constant between
+  modes — only light source and ink color change, like reading the same
+  printed page in daylight vs. under a desk lamp.
+
+  Import this file once, globally (e.g. in main.tsx or index.css).
+  ThemeContext sets data-theme="light" | "dark" on <html>.
+*/
+
+:root,
+:root[data-theme='light'] {
+  --bg: #f0efe9;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #e3e1d7;
+
+  --text-primary: #16181a;
+  --text-secondary: #5c6066;
+  --text-tertiary: #9a9d9f;
+
+  --accent: #2f7d8c;
+  --accent-soft: rgba(47, 125, 140, 0.14);
+  --accent-translucent: rgba(47, 125, 140, 0.35);
+  --accent-glow-bg: rgba(47, 125, 140, 0.07);
+  --accent-secondary: #3f5e8c;
+  --chip-gold: #9c6f2e;
+
+  --border: rgba(22, 24, 26, 0.1);
+  --border-strong: rgba(22, 24, 26, 0.2);
+  --grid-line: rgba(22, 24, 26, 0.04);
+
+  --status: #2f8a4a;
+  --status-glow: rgba(47, 138, 74, 0.4);
+
+  --photo-filter: grayscale(12%) brightness(1) contrast(1.03);
+
+  --cta-primary-bg: #16181a;
+  --cta-primary-text: #f0efe9;
+
+  --fade-rgb: 240, 239, 233;
+}
+
+:root[data-theme='dark'] {
+  --bg: #0c0b09;
+  --bg-elevated: #141210;
+  --bg-sunken: #1a1814;
+
+  --text-primary: #f4f0e8;
+  --text-secondary: #6a6460;
+  --text-tertiary: #46423c;
+
+  --accent: #c8a96e;
+  --accent-soft: rgba(200, 169, 110, 0.12);
+  --accent-translucent: rgba(200, 169, 110, 0.4);
+  --accent-glow-bg: rgba(200, 140, 60, 0.07);
+  --accent-secondary: #7090c8;
+  --chip-gold: #c8a96e;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --grid-line: rgba(255, 255, 255, 0.025);
+
+  --status: #5cb870;
+  --status-glow: rgba(92, 184, 112, 0.6);
+
+  --photo-filter: grayscale(30%) brightness(0.9) contrast(1.05);
+
+  --cta-primary-bg: #e8e0d0;
+  --cta-primary-text: #0a0a0a;
+
+  --fade-rgb: 12, 11, 9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

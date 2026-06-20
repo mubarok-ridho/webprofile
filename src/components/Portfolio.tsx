@@ -123,7 +123,7 @@ const Portfolio: React.FC = () => {
     <section
       id="portfolio"
       className="py-16 md:py-20 lg:py-24 relative overflow-hidden"
-      style={{ background: '#0c0b09' }}
+      style={{ background: 'var(--bg)', transition: 'background-color .3s ease' }}
     >
       {/* Subtle grid texture */}
       <div
@@ -132,7 +132,7 @@ const Portfolio: React.FC = () => {
           inset: 0,
           pointerEvents: 'none',
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)',
+            'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
           backgroundSize: '60px 60px',
         }}
       />
@@ -142,7 +142,7 @@ const Portfolio: React.FC = () => {
         <div className="text-center mb-12 md:mb-16">
           <p
             className="text-xs md:text-sm tracking-[0.2em] uppercase mb-2 md:mb-3"
-            style={{ color: '#8a8580', fontFamily: "'DM Mono', monospace" }}
+            style={{ color: 'var(--text-secondary)', fontFamily: "'DM Mono', monospace", transition: 'color .3s ease' }}
           >
             My Work
           </p>
@@ -150,15 +150,16 @@ const Portfolio: React.FC = () => {
             className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4"
             style={{
               fontFamily: "'DM Serif Display', serif",
-              color: '#f0ece4',
+              color: 'var(--text-primary)',
               fontWeight: 400,
+              transition: 'color .3s ease',
             }}
           >
             Portfolio
           </h2>
           <div
             className="w-12 h-px mx-auto rounded-full"
-            style={{ background: '#c8a96e' }}
+            style={{ background: 'var(--accent)', transition: 'background-color .3s ease' }}
           />
         </div>
 
@@ -175,18 +176,19 @@ const Portfolio: React.FC = () => {
                 key={item.id}
                 className="group relative rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1"
                 style={{
-                  background: 'rgba(20, 18, 16, 0.8)',
-                  border: '1px solid rgba(200, 169, 110, 0.12)',
+                  background: 'var(--bg-elevated)',
+                  border: '1px solid var(--border)',
+                  transition: 'background-color .3s ease, border-color .3s ease, transform .3s ease',
                 }}
               >
                 {/* Dekorasi garis di kiri card */}
                 <div
                   className="absolute left-0 top-0 bottom-0 w-0.5 transition-all duration-300 group-hover:w-1"
-                  style={{ background: '#c8a96e', opacity: 0.6 }}
+                  style={{ background: 'var(--accent)', opacity: 0.6 }}
                 />
 
                 {/* Image preview */}
-                <div className="relative w-full h-40 sm:h-44 md:h-48 overflow-hidden bg-[#1a1814]">
+                <div className="relative w-full h-40 sm:h-44 md:h-48 overflow-hidden" style={{ background: 'var(--bg-sunken)' }}>
                   <img
                     src={item.previewImage}
                     alt={item.title}
@@ -209,7 +211,7 @@ const Portfolio: React.FC = () => {
 
                 {/* Content */}
                 <div className="p-4 sm:p-5 md:p-6">
-                  {/* Logo - tetap PNG */}
+                  {/* Logo */}
                   <div className="mb-3 sm:mb-4 md:mb-5">
                     {isDoubleLogo ? (
                       <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
@@ -238,8 +240,9 @@ const Portfolio: React.FC = () => {
                     className="text-base sm:text-lg md:text-xl font-semibold mb-1 sm:mb-2"
                     style={{
                       fontFamily: "'Outfit', sans-serif",
-                      color: '#f0ece4',
+                      color: 'var(--text-primary)',
                       fontWeight: 500,
+                      transition: 'color .3s ease',
                     }}
                   >
                     {item.title}
@@ -248,13 +251,13 @@ const Portfolio: React.FC = () => {
                   {/* Dekorasi garis bawah title */}
                   <div
                     className="w-8 h-px mb-3 sm:mb-4 transition-all duration-300 group-hover:w-12"
-                    style={{ background: '#c8a96e', opacity: 0.5 }}
+                    style={{ background: 'var(--accent)', opacity: 0.5 }}
                   />
 
                   {/* Description */}
                   <p
                     className="text-[11px] sm:text-xs md:text-sm leading-relaxed mb-3 sm:mb-4"
-                    style={{ color: '#a8a090', lineHeight: 1.6 }}
+                    style={{ color: 'var(--text-secondary)', lineHeight: 1.6, transition: 'color .3s ease' }}
                   >
                     {item.description.length > 100 && window.innerWidth < 640
                       ? `${item.description.substring(0, 100)}...`
@@ -268,9 +271,10 @@ const Portfolio: React.FC = () => {
                         key={idx}
                         className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-[7px] sm:text-[8px] md:text-[9px] rounded font-mono"
                         style={{
-                          background: 'rgba(200, 169, 110, 0.1)',
-                          color: '#c8c0b4',
-                          border: '1px solid rgba(200, 169, 110, 0.15)',
+                          background: 'var(--accent-soft)',
+                          color: 'var(--text-secondary)',
+                          border: '1px solid var(--border)',
+                          transition: 'background-color .3s ease, color .3s ease, border-color .3s ease',
                         }}
                       >
                         {tech}
@@ -280,8 +284,9 @@ const Portfolio: React.FC = () => {
                       <span
                         className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-[7px] sm:text-[8px] md:text-[9px] rounded font-mono"
                         style={{
-                          background: 'rgba(200, 169, 110, 0.08)',
-                          color: '#6a6560',
+                          background: 'var(--accent-soft)',
+                          color: 'var(--text-tertiary)',
+                          transition: 'background-color .3s ease, color .3s ease',
                         }}
                       >
                         +{item.techStack.length - 3}
@@ -296,7 +301,7 @@ const Portfolio: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-mono transition-all duration-200"
-                      style={{ color: '#c8a96e' }}
+                      style={{ color: 'var(--accent)', transition: 'color .3s ease' }}
                     >
                       <span>View Project</span>
                       <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
@@ -310,7 +315,7 @@ const Portfolio: React.FC = () => {
                       <button
                         onClick={() => toggleExpand(item.id)}
                         className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-mono transition-colors duration-200"
-                        style={{ color: '#c8a96e' }}
+                        style={{ color: 'var(--accent)', transition: 'color .3s ease' }}
                       >
                         {isExpanded ? 'Hide Options' : 'View Options'}
                         <svg
@@ -328,8 +333,9 @@ const Portfolio: React.FC = () => {
                         <div
                           className="mt-2 rounded-md overflow-hidden"
                           style={{
-                            background: '#141210',
-                            border: '1px solid rgba(200, 169, 110, 0.15)',
+                            background: 'var(--bg-sunken)',
+                            border: '1px solid var(--border-strong)',
+                            transition: 'background-color .3s ease, border-color .3s ease',
                           }}
                         >
                           {item.links?.map((link, idx) => (
@@ -340,16 +346,16 @@ const Portfolio: React.FC = () => {
                               rel="noopener noreferrer"
                               className="block px-3 py-2 text-[10px] sm:text-xs font-mono transition-all duration-200 border-b last:border-b-0"
                               style={{
-                                color: '#a8a090',
-                                borderColor: 'rgba(200, 169, 110, 0.08)'
+                                color: 'var(--text-secondary)',
+                                borderColor: 'var(--border)',
                               }}
                               onMouseEnter={(e) => {
-                                e.currentTarget.style.color = '#c8a96e';
-                                e.currentTarget.style.background = 'rgba(200, 169, 110, 0.05)';
+                                e.currentTarget.style.color = 'var(--accent)';
+                                e.currentTarget.style.background = 'var(--accent-soft)';
                                 e.currentTarget.style.paddingLeft = '16px';
                               }}
                               onMouseLeave={(e) => {
-                                e.currentTarget.style.color = '#a8a090';
+                                e.currentTarget.style.color = 'var(--text-secondary)';
                                 e.currentTarget.style.background = 'transparent';
                                 e.currentTarget.style.paddingLeft = '12px';
                               }}

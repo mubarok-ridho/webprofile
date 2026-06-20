@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+// Import file logo dari lokasi aset kamu
+import Logo from '../assets/Logo'; 
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,128 +18,113 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'py-3' : 'py-5'
+      className={`sticky top-0 w-full z-50 transition-all duration-500 ${
+        scrolled 
+          ? 'py-4 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.5)]' 
+          : 'py-7 backdrop-blur-none'
       }`}
       style={{
+        // Memperbaiki warna abu-abu: murni transparan saat di paling atas
         background: scrolled 
           ? 'rgba(12, 11, 9, 0.95)'
-          : 'rgba(12, 11, 9, 0.85)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid rgba(200, 169, 110, 0.12)',
+          : 'transparent',
+        borderBottom: scrolled 
+          ? '1px solid rgba(200, 169, 110, 0.1)'
+          : '1px solid rgba(200, 169, 110, 0.0)',
       }}
     >
       <nav className="container mx-auto px-6 max-w-6xl flex justify-between items-center">
-        {/* Logo */}
+        {/* Logo Section */}
         <a
           href="#"
-          className="text-xl transition-colors"
-          style={{
-            fontFamily: "'DM Serif Display', serif",
-            color: '#f0ece4',
-            letterSpacing: '-0.02em',
-          }}
+          className="flex items-center justify-center focus:outline-none"
+          aria-label="Home"
         >
-          <span style={{ color: '#c8a96e' }}>M</span>R
+          <Logo />
         </a>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Desktop Menu - Lebih Interaktif dengan Efek Lift-up & Gradasi Garis */}
+        <div className="hidden md:flex items-center gap-10">
           {menuItems.map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="text-sm transition-all duration-200 relative group"
+              className="text-xs transition-all duration-300 relative py-1 tracking-widest uppercase block transform hover:-translate-y-[1px] group"
               style={{
                 fontFamily: "'DM Mono', monospace",
                 color: '#8a8580',
-                letterSpacing: '0.08em',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e'; }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#f0ece4'; }}
               onMouseLeave={(e) => { e.currentTarget.style.color = '#8a8580'; }}
             >
               {item}
+              {/* Garis bawah tipis melebar dari tengah dengan gradasi */}
               <span
-                className="absolute -bottom-1 left-0 w-0 h-px transition-all duration-200 group-hover:w-full"
-                style={{ background: '#c8a96e' }}
+                className="absolute bottom-0 left-1/2 w-0 h-[1.5px] -translate-x-1/2 transition-all duration-300 ease-out group-hover:w-full"
+                style={{ 
+                  background: 'linear-gradient(90deg, transparent, #c8a96e, transparent)' 
+                }}
               />
             </a>
           ))}
         </div>
 
-        {/* CTA Button */}
-        <a
-          href="#contact"
-          className="hidden md:inline-block text-xs py-2 px-5 rounded-sm transition-all duration-200 hover:opacity-80"
-          style={{
-            fontFamily: "'Poppins', monospace",
-            background: '#000000',
-            color: '#0a0a0a',
-            letterSpacing: '0.08em',
-          }}
-        >
-          Contact
-        </a>
-
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Button - Animasi Hamburger Berubah Jadi 'X' */}
         <button
-          className="md:hidden"
+          className="md:hidden p-1 focus:outline-none relative w-6 h-6 flex flex-col justify-center items-center gap-[5px]"
           onClick={() => setIsOpen(!isOpen)}
-          style={{ color: '#f0ece4' }}
+          aria-label="Toggle Menu"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {isOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
+          <span 
+            className={`h-[1.5px] w-5 bg-[#f0ece4] transition-all duration-300 ease-out ${
+              isOpen ? 'rotate-45 translate-y-[6.5px]' : ''
+            }`}
+          />
+          <span 
+            className={`h-[1.5px] w-5 bg-[#f0ece4] transition-all duration-300 ease-out ${
+              isOpen ? 'opacity-0 scale-x-0' : 'opacity-100'
+            }`}
+          />
+          <span 
+            className={`h-[1.5px] w-5 bg-[#f0ece4] transition-all duration-300 ease-out ${
+              isOpen ? '-rotate-45 translate-y-[-6.5px]' : ''
+            }`}
+          />
         </button>
       </nav>
 
-      {/* Mobile Menu Dropdown */}
-      {isOpen && (
-        <div
-          className="md:hidden mt-2 py-3 rounded-lg mx-4"
-          style={{
-            background: 'rgba(20, 18, 16, 0.98)',
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(200, 169, 110, 0.12)',
-          }}
-        >
-          {menuItems.map((item) => (
+      {/* Mobile Menu Dropdown - Transisi Berurutan (Staggered Fade-in) */}
+      <div
+        className={`md:hidden absolute left-0 w-full overflow-hidden transition-all duration-400 ease-in-out ${
+          isOpen ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
+        }`}
+        style={{
+          background: 'rgba(12, 11, 9, 0.98)',
+          borderBottom: isOpen ? '1px solid rgba(200, 169, 110, 0.08)' : 'none',
+        }}
+      >
+        <div className="px-8 py-6 flex flex-col gap-5">
+          {menuItems.map((item, index) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="block px-5 py-3 text-sm transition-colors"
+              className={`text-xs tracking-widest uppercase py-1 transition-all duration-300 transform ${
+                isOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
+              }`}
               style={{
                 fontFamily: "'DM Mono', monospace",
                 color: '#a8a090',
-                letterSpacing: '0.08em',
+                transitionDelay: `${index * 50}ms` // Efek muncul satu per satu
               }}
               onClick={() => setIsOpen(false)}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e'; e.currentTarget.style.background = 'rgba(200, 169, 110, 0.05)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#a8a090'; e.currentTarget.style.background = 'transparent'; }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#c8a96e'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#a8a090'; }}
             >
               {item}
             </a>
           ))}
-          <div className="h-px my-2" style={{ background: 'rgba(200, 169, 110, 0.08)' }} />
-          <a
-            href="#contact"
-            className="block mx-4 mt-2 text-center text-xs py-2.5 rounded-sm transition-all"
-            style={{
-              fontFamily: "'Poppins', monospace",
-              background: '#705d08',
-              color: '#000000',
-              letterSpacing: '0.08em',
-            }}
-            onClick={() => setIsOpen(false)}
-          >
-            Contact
-          </a>
         </div>
-      )}
+      </div>
     </header>
   );
 };

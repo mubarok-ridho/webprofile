@@ -94,7 +94,7 @@ const Education: React.FC = () => {
     <section
       id="education"
       className="py-16 md:py-20 lg:py-24 relative overflow-hidden"
-      style={{ background: '#0c0b09' }}
+      style={{ background: 'var(--bg)', transition: 'background-color .3s ease' }}
     >
       {/* Subtle grid texture */}
       <div
@@ -103,7 +103,7 @@ const Education: React.FC = () => {
           inset: 0,
           pointerEvents: 'none',
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)',
+            'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
           backgroundSize: '60px 60px',
         }}
       />
@@ -113,7 +113,7 @@ const Education: React.FC = () => {
         <div className="text-center mb-10 md:mb-14 lg:mb-16">
           <p
             className="text-xs md:text-sm tracking-[0.2em] uppercase mb-2 md:mb-3"
-            style={{ color: '#8a8580', fontFamily: "'DM Mono', monospace" }}
+            style={{ color: 'var(--text-secondary)', fontFamily: "'DM Mono', monospace", transition: 'color .3s ease' }}
           >
             My Academic Background
           </p>
@@ -121,15 +121,16 @@ const Education: React.FC = () => {
             className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4"
             style={{
               fontFamily: "'DM Serif Display', serif",
-              color: '#f0ece4',
+              color: 'var(--text-primary)',
               fontWeight: 400,
+              transition: 'color .3s ease',
             }}
           >
             Education
           </h2>
           <div
             className="w-12 h-px mx-auto rounded-full"
-            style={{ background: '#c8a96e' }}
+            style={{ background: 'var(--accent)', transition: 'background-color .3s ease' }}
           />
         </div>
 
@@ -140,14 +141,13 @@ const Education: React.FC = () => {
               key={edu.id}
               className="rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
               style={{
-                background: 'rgba(20, 18, 16, 0.85)',
-                border: '1px solid rgba(200, 169, 110, 0.12)',
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border)',
+                transition: 'background-color .3s ease, border-color .3s ease, transform .3s ease',
               }}
             >
               <div className="p-5 sm:p-6 md:p-7">
-                {/* Mobile: stacked layout, Desktop: row layout */}
-                
-                {/* Baris 1: Logo + Degree (mobile & desktop) */}
+                {/* Baris 1: Logo + Degree */}
                 <div className="flex items-center gap-4 sm:gap-5 mb-4">
                   <img
                     src={edu.logo}
@@ -160,8 +160,9 @@ const Education: React.FC = () => {
                       className="text-base sm:text-lg md:text-xl font-semibold mb-1"
                       style={{
                         fontFamily: "'Outfit', sans-serif",
-                        color: '#f0ece4',
+                        color: 'var(--text-primary)',
                         fontWeight: 500,
+                        transition: 'color .3s ease',
                       }}
                     >
                       {edu.degree}
@@ -169,8 +170,9 @@ const Education: React.FC = () => {
                     <p
                       className="text-xs sm:text-sm font-mono tracking-wide"
                       style={{
-                        color: '#c8a96e',
+                        color: 'var(--accent)',
                         fontFamily: "'DM Mono', monospace",
+                        transition: 'color .3s ease',
                       }}
                     >
                       {edu.institution}
@@ -178,14 +180,15 @@ const Education: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Baris 2: Year + GPA (side by side di mobile) */}
+                {/* Baris 2: Year + GPA */}
                 <div className="flex flex-row items-center justify-between gap-3 mb-4">
                   <span
                     className="inline-block px-2 py-1 rounded text-[9px] sm:text-[10px] font-mono tracking-wider"
                     style={{
-                      background: 'rgba(200, 169, 110, 0.12)',
-                      color: '#c8c0b4',
-                      border: '1px solid rgba(200, 169, 110, 0.15)',
+                      background: 'var(--accent-soft)',
+                      color: 'var(--text-primary)',
+                      border: '1px solid var(--border)',
+                      transition: 'background-color .3s ease, color .3s ease, border-color .3s ease',
                     }}
                   >
                     {edu.year}
@@ -195,7 +198,7 @@ const Education: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <span
                         className="text-[8px] sm:text-[9px] font-mono tracking-wider"
-                        style={{ color: '#6a6560' }}
+                        style={{ color: 'var(--text-tertiary)', transition: 'color .3s ease' }}
                       >
                         GPA
                       </span>
@@ -203,8 +206,9 @@ const Education: React.FC = () => {
                         className="text-lg sm:text-xl md:text-2xl font-bold"
                         style={{
                           fontFamily: "'DM Serif Display', serif",
-                          color: '#c8a96e',
+                          color: 'var(--accent)',
                           lineHeight: 1,
+                          transition: 'color .3s ease',
                         }}
                       >
                         {edu.gpa}
@@ -213,17 +217,15 @@ const Education: React.FC = () => {
                   )}
                 </div>
 
-                {/* Garis pemisah */}
                 <div
                   className="h-px w-full my-3"
-                  style={{ background: 'rgba(200, 169, 110, 0.08)' }}
+                  style={{ background: 'var(--border)', transition: 'background-color .3s ease' }}
                 />
 
-                {/* Baris 3: Description */}
                 {edu.description && (
                   <p
                     className="text-xs sm:text-sm leading-relaxed"
-                    style={{ color: '#a8a090', lineHeight: 1.6 }}
+                    style={{ color: 'var(--text-secondary)', lineHeight: 1.6, transition: 'color .3s ease' }}
                   >
                     {edu.description}
                   </p>
@@ -237,7 +239,7 @@ const Education: React.FC = () => {
         <div className="text-center mb-10 md:mb-12 lg:mb-14">
           <p
             className="text-xs md:text-sm tracking-[0.2em] uppercase mb-2 md:mb-3"
-            style={{ color: '#8a8580', fontFamily: "'DM Mono', monospace" }}
+            style={{ color: 'var(--text-secondary)', fontFamily: "'DM Mono', monospace", transition: 'color .3s ease' }}
           >
             My Contributions
           </p>
@@ -245,15 +247,16 @@ const Education: React.FC = () => {
             className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4"
             style={{
               fontFamily: "'DM Serif Display', serif",
-              color: '#f0ece4',
+              color: 'var(--text-primary)',
               fontWeight: 400,
+              transition: 'color .3s ease',
             }}
           >
             Research & Study
           </h2>
           <div
             className="w-12 h-px mx-auto rounded-full"
-            style={{ background: '#c8a96e' }}
+            style={{ background: 'var(--accent)', transition: 'background-color .3s ease' }}
           />
         </div>
 
@@ -264,12 +267,12 @@ const Education: React.FC = () => {
               key={research.id}
               className="group rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               style={{
-                background: 'rgba(20, 18, 16, 0.85)',
-                border: '1px solid rgba(200, 169, 110, 0.12)',
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border)',
+                transition: 'background-color .3s ease, border-color .3s ease, transform .3s ease',
               }}
             >
               <div className="p-5 sm:p-6">
-                {/* Logos */}
                 <div className="flex items-center gap-3 sm:gap-4 mb-4 flex-wrap">
                   {research.logos.map((logo, idx) => (
                     <img
@@ -285,55 +288,53 @@ const Education: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Title */}
                 <h3
                   className="text-sm sm:text-base md:text-lg font-semibold mb-2 leading-relaxed"
                   style={{
                     fontFamily: "'Outfit', sans-serif",
-                    color: '#f0ece4',
+                    color: 'var(--text-primary)',
                     fontWeight: 500,
+                    transition: 'color .3s ease',
                   }}
                 >
                   {research.title}
                 </h3>
 
-                {/* Dekorasi garis */}
                 <div
                   className="w-8 h-px mb-3 transition-all duration-300 group-hover:w-12"
-                  style={{ background: '#c8a96e', opacity: 0.4 }}
+                  style={{ background: 'var(--accent)', opacity: 0.4 }}
                 />
 
-                {/* Funder & Year */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
                   <p
                     className="text-[10px] sm:text-[11px] md:text-xs font-mono tracking-wide"
-                    style={{ color: '#c8a96e', fontFamily: "'DM Mono', monospace" }}
+                    style={{ color: 'var(--accent)', fontFamily: "'DM Mono', monospace", transition: 'color .3s ease' }}
                   >
                     {research.funder.length > 60 ? `${research.funder.substring(0, 60)}...` : research.funder}
                   </p>
                   <span
                     className="inline-block px-2 py-0.5 rounded text-[8px] sm:text-[9px] font-mono self-start sm:self-auto"
                     style={{
-                      background: 'rgba(200, 169, 110, 0.1)',
-                      color: '#8a8580',
-                      border: '1px solid rgba(200, 169, 110, 0.1)',
+                      background: 'var(--accent-soft)',
+                      color: 'var(--text-secondary)',
+                      border: '1px solid var(--border)',
+                      transition: 'background-color .3s ease, color .3s ease, border-color .3s ease',
                     }}
                   >
                     {research.year}
                   </span>
                 </div>
 
-                {/* Descriptions */}
                 <ul className="space-y-2 sm:space-y-2.5">
                   {research.descriptions.map((desc, idx) => (
                     <li
                       key={idx}
                       className="text-[10px] sm:text-xs leading-relaxed flex items-start gap-2"
-                      style={{ color: '#a8a090', lineHeight: 1.6 }}
+                      style={{ color: 'var(--text-secondary)', lineHeight: 1.6, transition: 'color .3s ease' }}
                     >
                       <span
                         className="inline-block w-1 h-1 rounded-full mt-1.5 flex-shrink-0"
-                        style={{ background: '#c8a96e' }}
+                        style={{ background: 'var(--accent)', transition: 'background-color .3s ease' }}
                       />
                       <span className="flex-1">{desc}</span>
                     </li>

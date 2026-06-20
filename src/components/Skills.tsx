@@ -7,7 +7,6 @@ interface SkillItem {
   logo?: string;
 }
 
-// SVG Icons for categories
 const IconFrontend = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
     <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
@@ -52,23 +51,18 @@ const IconTools = () => (
 
 const Skills: React.FC = () => {
   const skills: SkillItem[] = [
-    // Backend & Languages
     { name: 'Go', category: 'backend', level: 90, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg' },
     { name: 'Python', category: 'backend', level: 90, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
     { name: 'PHP', category: 'backend', level: 65, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg' },
     { name: 'Java', category: 'backend', level: 80, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
-    // Frontend Development
     { name: 'React', category: 'frontend', level: 80, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
     { name: 'Flutter', category: 'frontend', level: 80, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg' },
     { name: 'Tailwind CSS', category: 'frontend', level: 80, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
-    // AI & Machine Learning
     { name: 'Machine Learning', category: 'ai', level: 90, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg' },
     { name: 'NLP', category: 'ai', level: 87, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg' },
     { name: 'Computer Vision', category: 'ai', level: 83, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg' },
-    // Database
     { name: 'PostgreSQL', category: 'database', level: 92, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
     { name: 'MySQL', category: 'database', level: 90, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
-    // Tools & Technologies
     { name: 'Docker', category: 'tools', level: 85, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
     { name: 'Git', category: 'tools', level: 90, logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
   ];
@@ -120,25 +114,23 @@ const Skills: React.FC = () => {
     <section
       id="skills"
       className="py-20 relative overflow-hidden"
-      style={{ background: '#0c0b09' }}
+      style={{ background: 'var(--bg)', transition: 'background-color .3s ease' }}
     >
-      {/* Subtle grid texture */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
           pointerEvents: 'none',
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(var(--grid-line) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
         }}
       />
 
       <div className="container mx-auto px-6 max-w-5xl relative z-10">
-        {/* Section header */}
         <div className="text-center mb-14">
           <p
             className="text-sm tracking-widest uppercase mb-3"
-            style={{ color: '#8a8580', fontFamily: "'Montserrat', monospace" }}
+            style={{ color: 'var(--text-secondary)', fontFamily: "'Montserrat', monospace", transition: 'color .3s ease' }}
           >
             My Expertise
           </p>
@@ -146,41 +138,43 @@ const Skills: React.FC = () => {
             className="text-3xl md:text-4xl font-bold mb-4"
             style={{
               fontFamily: "'Montserrat', sans-serif",
-              color: '#f0ece4',
+              color: 'var(--text-primary)',
               fontWeight: 600,
+              transition: 'color .3s ease',
             }}
           >
             Technical Skills
           </h2>
           <div
             className="w-12 h-px mx-auto rounded-full"
-            style={{ background: '#c8a96e' }}
+            style={{ background: 'var(--accent)', transition: 'background-color .3s ease' }}
           />
         </div>
 
-        {/* Skills Categories */}
         <div className="space-y-10">
           {Object.entries(groupedSkills).map(([category, categorySkills]) => (
             <div
               key={category}
               className="rounded-lg overflow-hidden"
               style={{
-                background: 'rgba(20, 18, 16, 0.6)',
-                border: '1px solid rgba(200, 169, 110, 0.1)',
+                background: 'var(--bg-elevated)',
+                border: '1px solid var(--border)',
+                transition: 'background-color .3s ease, border-color .3s ease',
               }}
             >
               <div
                 className="px-6 py-4 border-b"
-                style={{ borderColor: 'rgba(200, 169, 110, 0.1)' }}
+                style={{ borderColor: 'var(--border)', transition: 'border-color .3s ease' }}
               >
                 <h3
                   className="text-lg font-semibold flex items-center gap-2"
                   style={{
                     fontFamily: "'DM Serif Display', serif",
-                    color: '#f0ece4',
+                    color: 'var(--text-primary)',
+                    transition: 'color .3s ease',
                   }}
                 >
-                  <span style={{ color: '#c8a96e' }}>
+                  <span style={{ color: 'var(--accent)', transition: 'color .3s ease' }}>
                     {getCategoryIcon(category)}
                   </span>
                   {getCategoryName(category)}
@@ -208,7 +202,7 @@ const Skills: React.FC = () => {
                             )}
                             <span
                               className="text-sm font-medium"
-                              style={{ color: '#e0dcd4' }}
+                              style={{ color: 'var(--text-primary)', transition: 'color .3s ease' }}
                             >
                               {skill.name}
                             </span>
@@ -216,8 +210,9 @@ const Skills: React.FC = () => {
                               <span
                                 className="text-[9px] px-1.5 py-0.5 rounded-sm"
                                 style={{
-                                  background: 'rgba(200, 169, 110, 0.15)',
-                                  color: '#c8a96e',
+                                  background: 'var(--accent-soft)',
+                                  color: 'var(--accent)',
+                                  transition: 'background-color .3s ease, color .3s ease',
                                 }}
                               >
                                 {skill.name === 'PHP' ? 'Laravel' : 'Spring Boot'}
@@ -233,7 +228,7 @@ const Skills: React.FC = () => {
                         </div>
                         <div
                           className="w-full rounded-full h-1.5"
-                          style={{ background: 'rgba(255,255,255,0.08)' }}
+                          style={{ background: 'var(--border)', transition: 'background-color .3s ease' }}
                         >
                           <div
                             className="rounded-full h-1.5 transition-all duration-500"
