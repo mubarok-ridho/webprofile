@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ThemeToggle from './ThemeToggle';
+import ThemeToggle from './Themetoggle';
 
 const LOGO_URL =
   'https://res.cloudinary.com/doafwrddd/image/upload/v1781981450/image_16_1_vfszlo.png';
